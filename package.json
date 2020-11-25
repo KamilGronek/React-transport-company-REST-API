@@ -2,8 +2,10 @@
   "name": "transport-company-react-api",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kamilgronek.github.io/React-transport-company-REST-API/",
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "gh-pages": "^3.1.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
@@ -19,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
