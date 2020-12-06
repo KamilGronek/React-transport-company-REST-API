@@ -9,11 +9,12 @@ class Navigation extends Component {
     this.state = {
       user: {},
       accessToken: this.props.accessToken,
+      url: "http://localhost:8000/api/current-user/",
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/current-user/", {
+    fetch(`${this.state.url}`, {
       method: "get",
       headers: new Headers({
         Authorization: "Bearer " + this.props.accessToken,
@@ -98,7 +99,7 @@ class Navigation extends Component {
             <li className="nav-item dropdown">
               <NavLink
                 className="nav-link dropdown-toggle"
-                to="/user/user-order"
+                to="/user-order"
                 id="navbarDropdown"
                 role="button"
                 data-toggle="dropdown"
@@ -108,10 +109,10 @@ class Navigation extends Component {
                 User Order
               </NavLink>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <NavLink className="dropdown-item" to="/user/user-order">
+                <NavLink className="dropdown-item" to="/user-order">
                   User order list
                 </NavLink>
-                <NavLink className="dropdown-item" to="/user/user-order/new">
+                <NavLink className="dropdown-item" to="/user-order/new">
                   User order new
                 </NavLink>
               </div>
@@ -120,7 +121,7 @@ class Navigation extends Component {
               <li className="nav-item dropdown">
                 <NavLink
                   className="nav-link dropdown-toggle"
-                  to="/user/courier"
+                  to="/courier"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
@@ -130,10 +131,10 @@ class Navigation extends Component {
                   Courier
                 </NavLink>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <NavLink className="dropdown-item" to="/user/courier">
+                  <NavLink className="dropdown-item" to="/courier">
                     Courier list
                   </NavLink>
-                  <NavLink className="dropdown-item" to="/user/courier/new">
+                  <NavLink className="dropdown-item" to="/courier/new">
                     Create new
                   </NavLink>
                 </div>
@@ -161,7 +162,7 @@ class Navigation extends Component {
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
                   >
-                    <NavLink className="dropdown-item" to="/user/courier-order">
+                    <NavLink className="dropdown-item" to="/courier-order">
                       list for all
                     </NavLink>
                   </div>
@@ -173,7 +174,7 @@ class Navigation extends Component {
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
                   >
-                    <NavLink className="dropdown-item" to="/user/courier-order">
+                    <NavLink className="dropdown-item" to="/courier-order">
                       list for current courier
                     </NavLink>
                   </div>

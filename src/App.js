@@ -3,7 +3,7 @@ import "./styles/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LoginForm from "./components/LoginForm";
 import UserComponents from "./components/UserComponents";
@@ -25,24 +25,22 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <>
-          <Route
-            path="/user"
-            render={() => <Navigation accessToken={this.getAccessToken()} />}
-          />
-          <Route
-            path="/login"
-            render={(props) => (
-              <LoginForm {...props} setAccessToken={this.setAccessToken} />
-            )}
-          />
-          <Route
-            path="/"
-            render={(props) => (
-              <UserComponents {...props} accessToken={this.getAccessToken()} />
-            )}
-          />
-        </>
+        <Route
+          path="/"
+          render={() => <Navigation accessToken={this.getAccessToken()} />}
+        />
+        <Route
+          path="/login"
+          render={(props) => (
+            <LoginForm {...props} setAccessToken={this.setAccessToken} />
+          )}
+        />
+        <Route
+          path="/"
+          render={(props) => (
+            <UserComponents {...props} accessToken={this.getAccessToken()} />
+          )}
+        />
       </Router>
     );
   }

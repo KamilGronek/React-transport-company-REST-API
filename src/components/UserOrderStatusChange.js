@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 class UserOrderStatusChange extends Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class UserOrderStatusChange extends Component {
     )
       .then((response) => {
         if (response.status === 200) {
-          this.props.history.push("/user/courier-order");
+          this.props.history.push("/courier-order");
           return response;
         }
         if (response.status === 400) {
@@ -89,75 +90,59 @@ class UserOrderStatusChange extends Component {
   render() {
     return (
       <>
-        <div className="container">
-          <div className="d-flex justify-content-center">
-            <div className="bg-secondary">
-              <h1
-                className="display-4 d-flex justify-content-center"
-                style={{ paddingTop: "30px" }}
-              >
-                Edit status
-              </h1>
-              <div
-                className="d-flex justify-content-center"
-                style={{ paddingTop: "30px" }}
-              >
-                <form onSubmit={this.handleSubmit}>
-                  <div className="d-flex flex-column">
-                    <div className="row">
-                      <div className="col">
-                        <div className="float-right">
-                          <label
-                            htmlFor="user_order_admin_status_status"
-                            className="required"
-                          >
-                            Status
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="float-left">
-                          <select
-                            name="status"
-                            onChange={this.handleChangeStatus}
-                            value={this.state.changeStatus.status}
-                          >
-                            {this.state.userOrderStatuses.map((status) => (
-                              <option key={status.value} value={status.value}>
-                                {status.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn d-flex justify-content-center btn btn-primary"
-                    style={{ margin: "0 185px", marginTop: "20px" }}
+        <h1
+          className="display-4 d-flex justify-content-center"
+          style={{ paddingTop: "30px" }}
+        >
+          Edit status
+        </h1>
+        <form onSubmit={this.handleSubmit}>
+          <div className="row justify-content-center">
+            <div
+              className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light "
+              style={{ borderRadius: "10px" }}
+            >
+              <br />
+              <div className="form-group row">
+                <label
+                  htmlFor="user_order_admin_status_status"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                >
+                  Status:
+                </label>
+
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                  <select
+                    className="form-control"
+                    name="status"
+                    onChange={this.handleChangeStatus}
+                    value={this.state.changeStatus.status}
                   >
-                    Save
-                  </button>
-                  <input
-                    type="hidden"
-                    id="user_order_admin_status__token"
-                    name="user_order_admin_status[_token]"
-                    defaultValue="9pJ3SzXh2RDu2SNAwEBGQS_5UEkxFiO3XPQdwUCyNNM"
-                  />
-                </form>
-              </div>
-              <div
-                className="d-flex flex-column"
-                style={{ paddingTop: "10px" }}
-              >
-                <a href="/user-order/" style={{ textAlign: "center" }}>
-                  back to list
-                </a>
+                    {this.state.userOrderStatuses.map((status) => (
+                      <option key={status.value} value={status.value}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <div className="text-center" style={{ marginTop: 20 }}>
+            <button
+              type="submit"
+              className="btn btn-warning  btn-circle btn-lg"
+            >
+              EDIT
+            </button>
+          </div>
+          <br />
+          <div className="d-flex flex-column">
+            <NavLink to="/courier-order" style={{ textAlign: "center" }}>
+              back to list
+            </NavLink>
+          </div>
+        </form>
       </>
     );
   }

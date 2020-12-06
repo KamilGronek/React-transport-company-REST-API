@@ -22,7 +22,7 @@ class UserOrderDelete extends Component {
         throw new Error("Something went wrong...");
       })
       .then((response) => {
-        this.props.history.push("/user/user-order");
+        this.props.history.push("/user-order");
       })
       .catch((error) => console.log(error));
   }
@@ -30,11 +30,11 @@ class UserOrderDelete extends Component {
   render() {
     return (
       <button
-        className="btn btn-primary"
+        className="btn btn-danger  btn-circle btn-lg"
         type="submit"
         onClick={this.handleClickDelete}
       >
-        delete
+        DELETE
       </button>
     );
   }

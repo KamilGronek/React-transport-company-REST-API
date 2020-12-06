@@ -28,7 +28,7 @@ class UserOrder extends Component {
       .then((response) => response.json())
       .then((userOrders) => {
         this.setState({
-          userOrders: userOrders,
+          userOrders: userOrders.reverse(),
         });
       })
       .catch((error) => console.log(error));
@@ -55,7 +55,7 @@ class UserOrder extends Component {
           <div className="new">
             <NavLink
               style={{ display: "flex", justifyContent: "center" }}
-              to="/user/user-order/new"
+              to="/user-order/new"
             >
               Create new
             </NavLink>

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 class UserList extends Component {
   render() {
-    const { id, number, description, comments } = this.props.userOrder;
+    const { id, number, description, comments, status } = this.props.userOrder;
 
     return (
       <>
@@ -14,24 +14,23 @@ class UserList extends Component {
             <td>{description}</td>
             <td>{comments}</td>
             <td>{this.props.userOrder.headquarters.name}</td>
-            {/* <tr> */}
+
             <td>
-              {" "}
-              weigth: {this.props.userOrder.package.weight}
-              {/* </tr> */}
-              {/* <tr> */}
-              width:{this.props.userOrder.package.width}
-              {/* </tr> */}
-              {/* <tr> */}
-              height:{this.props.userOrder.package.height}
-              {/* </tr> */}
-              {/* <tr> */}
-              length: {this.props.userOrder.package.length}
+              <p> weigth:{this.props.userOrder.package.weight}</p>
+              <p> width:{this.props.userOrder.package.width}</p>
+              <p> height:{this.props.userOrder.package.height}</p>
+              <p>length:{this.props.userOrder.package.length}</p>
             </td>
-            {/* </tr> */}
+
             <td>{this.props.userOrder.sender_details.name}</td>
             <td>{this.props.userOrder.recipient_details.name}</td>
-            <td>{this.props.userOrder.status}</td>
+            <td>
+              {status === "PROVIDED" ? (
+                <span style={{ color: "lightgreen" }}>{status}</span>
+              ) : (
+                status
+              )}
+            </td>
 
             {this.props.userOrder.courier === null ? (
               <span style={{ color: "red" }}> courier expired</span>
@@ -42,7 +41,7 @@ class UserList extends Component {
             <td>
               <NavLink
                 to={{
-                  pathname: "/user/user-order/show",
+                  pathname: "/user-order/show",
                   id: id,
                 }}
               >
@@ -51,7 +50,7 @@ class UserList extends Component {
               <br></br>
               <NavLink
                 to={{
-                  pathname: "/user/user-order/edit",
+                  pathname: "/user-order/edit",
                   id: id,
                 }}
               >

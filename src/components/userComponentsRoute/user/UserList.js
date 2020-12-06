@@ -9,7 +9,13 @@ class UserList extends Component {
       <>
         <tbody>
           <tr>
-            <td>{id}</td>
+            <td>
+              {this.props.newObject ? (
+                <span style={{ color: "green" }}> {id}</span>
+              ) : (
+                this.props.newObject
+              )}
+            </td>
             <td>{name}</td>
             <td>{surname}</td>
             <td>{role}</td>

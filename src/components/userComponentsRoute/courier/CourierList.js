@@ -29,7 +29,7 @@ class CourierList extends Component {
             <td>
               <NavLink
                 to={{
-                  pathname: "/user/courier/show",
+                  pathname: "/courier/show",
                   id: courierId,
                 }}
               >
@@ -38,7 +38,7 @@ class CourierList extends Component {
               <br></br>
               <NavLink
                 to={{
-                  pathname: "/user/courier/edit",
+                  pathname: "/courier/edit",
                   id: courierId,
                 }}
               >

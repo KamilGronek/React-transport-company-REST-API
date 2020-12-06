@@ -50,7 +50,7 @@ class Courier extends Component {
             ))}
           </table>
           <div className="text-center">
-            <NavLink to="/user/courier/new">Create new</NavLink>
+            <NavLink to="/courier/new">Create new</NavLink>
           </div>
         </div>
       </>

@@ -11,7 +11,7 @@ const CourierListHeader = () => {
         <th>PhoneNumber</th>
         <th>E-mail</th>
         <th>District</th>
-        <th>Actions</th>
+        <th className="text-center">Actions</th>
       </tr>
     </thead>
   );

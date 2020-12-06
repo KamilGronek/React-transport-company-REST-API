@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserListHeader from "../../UserListHeader";
+import CourierListHeader from "../../CourierListHeader";
 import { NavLink } from "react-router-dom";
 import CourierDelete from "./CourierDelete";
 class UserListShow extends Component {
@@ -59,7 +59,7 @@ class UserListShow extends Component {
             <h1 className="display-4">Courier show</h1>
           </div>
           <table className="table table-striped table-hover table-sm table-responsive-sm">
-            <UserListHeader />
+            <CourierListHeader />
             <tbody>
               <tr>
                 <td>{id}</td>
@@ -69,11 +69,11 @@ class UserListShow extends Component {
                 <td>{phone_number}</td>
                 <td>{username}</td>
                 <td>{district}</td>
-                <td>
-                  <NavLink to="/user/courier"> back to list </NavLink>
+                <td class="d-flex justify-content-around">
+                  <NavLink to="/courier"> back to list </NavLink>
                   <NavLink
                     to={{
-                      pathname: "/user/courier/edit",
+                      pathname: "/courier/edit",
                       id: courrierId,
                     }}
                   >

@@ -29,13 +29,17 @@ class UserDelete extends Component {
 
   render() {
     return (
-      <button
-        className="btn btn-primary"
-        type="submit"
-        onClick={this.handleClickDelete}
-      >
-        delete
-      </button>
+      <>
+        <div className="text-center">
+          <button
+            className="btn btn-danger  btn-circle btn-lg"
+            onClick={this.handleClickDelete}
+          >
+            {" "}
+            DELETE
+          </button>
+        </div>
+      </>
     );
   }
 }

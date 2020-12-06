@@ -54,10 +54,9 @@ class UserListShow extends Component {
                 <td>{role}</td>
                 <td>{phone_number}</td>
                 <td>{username}</td>
-                <td>
+                <td class="d-flex justify-content-around">
                   <NavLink to="/user"> back to list </NavLink>
 
-                  {/* <button>Edit</button> */}
                   <NavLink
                     to={{
                       pathname: "/user/edit",

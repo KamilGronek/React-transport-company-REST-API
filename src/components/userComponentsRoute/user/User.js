@@ -9,6 +9,7 @@ class User extends Component {
     this.state = {
       users: [],
       user: {},
+      color: "red",
     };
   }
 
@@ -29,10 +30,16 @@ class User extends Component {
       })
       .then((response) => response.json())
       .then((users) => {
+        console.log(users.reverse());
+        console.log(users[0].id);
+        // let newObject = users.slice(0, 1)[0].id;
+
         console.log(users);
         this.setState({
           users: users,
         });
+
+        // let newObject = users.slice(0, 1)[0];
       })
       .catch((error) => console.log(error));
     this.getUserRole();
@@ -75,7 +82,7 @@ class User extends Component {
           <table className="table table-striped table-hover table-sm table-responsive-sm">
             <UserListHeader />
             {users.map((user) => (
-              <UserList key={user.id} user={user} />
+              <UserList key={user.id} user={user} newObject={users[0].id} />
             ))}
           </table>
 

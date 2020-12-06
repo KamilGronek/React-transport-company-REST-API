@@ -22,20 +22,24 @@ class CourierDelete extends Component {
         throw new Error("Something went wrong...");
       })
       .then((response) => {
-        this.props.history.push("/user/courier");
+        this.props.history.push("/courier");
       })
       .catch((error) => console.log(error));
   }
 
   render() {
     return (
-      <button
-        className="btn btn-primary"
-        type="submit"
-        onClick={this.handleClickDelete}
-      >
-        delete
-      </button>
+      <>
+        <div className="text-center">
+          <button
+            className="btn btn-danger  btn-circle btn-lg"
+            type="submit"
+            onClick={this.handleClickDelete}
+          >
+            DELETE
+          </button>
+        </div>
+      </>
     );
   }
 }

@@ -11,6 +11,7 @@ class LoginForm extends Component {
       email: "",
       password: "",
       accessToken: "",
+      url: "http://localhost:8000/oauth/v2/token",
 
       errors: {
         errorsEmail: false,
@@ -45,7 +46,7 @@ class LoginForm extends Component {
       password: this.state.password,
       client_secret: "sdgggskokererg4232404gc4csdgfdsgf8s8ck5s",
     });
-    fetch("http://localhost:8000/oauth/v2/token", {
+    fetch(`${this.state.url}`, {
       method: "post",
       body: json,
       headers: new Headers({
@@ -90,7 +91,7 @@ class LoginForm extends Component {
                 className="form-control"
                 placeholder="E-mail address"
                 required
-                autoFocuss
+                autoFocus
                 onChange={this.handleChange}
                 value={this.state.email}
               />
