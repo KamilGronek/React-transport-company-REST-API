@@ -23,7 +23,7 @@ class UserEditForm extends Component {
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "30px" }}
+          style={{ fontSize: "40px", paddingTop: "130px" }}
         >
           Edit User
         </h1>

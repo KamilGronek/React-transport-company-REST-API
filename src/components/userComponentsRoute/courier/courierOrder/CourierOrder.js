@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import CourierOrderHeader from "./CourierOrderHeader";
 import CourierOrderList from "./CourierOrderList";
-// import {NavLink} from "react-router-dom";
+import { Link } from "react-scroll";
+import { animateScroll } from "react-scroll";
 
 class CourierOrder extends Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class CourierOrder extends Component {
     this.state = {
       courierOrders: [],
       user: {},
+      count: 1,
+      showLessButton: false,
     };
   }
 
@@ -52,17 +55,64 @@ class CourierOrder extends Component {
       })
       .then((response) => response.json())
       .then((courierOrders) => {
+        courierOrders.reverse();
+
         this.setState({
           courierOrders: courierOrders,
         });
       })
       .catch((error) => console.log(error));
-
     this.getUserRole();
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: "ContainerElementID",
+    });
+  }
+
+  handleIncrementCount = () => {
+    this.setState({
+      count: this.state.count + 1,
+      showLessButton: false,
+    });
+    console.log(this.state.count);
+    this.scrollToBottom();
+    this.showLessButton();
+  };
+
+  handleDecrementCount = () => {
+    this.setState({
+      count: this.state.count - 1,
+    });
+    console.log(this.state.count);
+  };
+
+  showLessButton = () => {
+    this.setState({
+      showLessButton: true,
+    });
+  };
+
+  getOrders() {
+    let courierOrders = [...this.state.courierOrders];
+    let n = 3;
+    let increment = this.state.count;
+    let decrement = this.state.count;
+
+    let arrayLength = courierOrders.slice(0, n * increment || decrement);
+    console.log(arrayLength.length);
+    return arrayLength.map((courierOrder) => (
+      <CourierOrderList key={courierOrder.id} courierOrder={courierOrder} />
+    ));
   }
 
   render() {
-    const courierOrders = this.state.courierOrders;
+    // const courierOrders = this.state.courierOrders;
 
     const { role } = this.state.user;
     return (
@@ -80,13 +130,50 @@ class CourierOrder extends Component {
             style={{ marginTop: 30 }}
           >
             <CourierOrderHeader />
-            {courierOrders.map((courierOrder) => (
-              <CourierOrderList
-                key={courierOrder.id}
-                courierOrder={courierOrder}
-              />
-            ))}
+            {this.getOrders()}
           </table>
+          <hr style={{ marginTop: "10px" }} />
+          <div className="d-flex flex-column">
+            <div className=" row justify-content-center">
+              <h5 className="mb-0 ">
+                <Link
+                  to="#"
+                  className="btn btn-link collapsed"
+                  style={{ fontSize: "11px" }}
+                  type="button"
+                  onClick={this.handleIncrementCount}
+                >
+                  Show more <span style={{ visibility: "hidden" }}>xx</span>
+                  <i className="arrow down"></i>
+                </Link>
+              </h5>
+            </div>
+            <div className=" row justify-content-center">
+              <h5 className="mb-0 ">
+                {this.state.count > 1 ? (
+                  <>
+                    <Link
+                      to="#"
+                      className={
+                        this.state.showLessButton
+                          ? "visible btn btn-link collapsed"
+                          : "hidden btn btn-link collapsed"
+                      }
+                      style={{ visibility: "visible", fontSize: "11px" }}
+                      type="button"
+                      onClick={this.handleDecrementCount}
+                    >
+                      Show less
+                      <span style={{ visibility: "hidden" }}>xxxx</span>
+                      <i className="arrow up"></i>
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
+              </h5>
+            </div>
+          </div>
         </div>
       </>
     );

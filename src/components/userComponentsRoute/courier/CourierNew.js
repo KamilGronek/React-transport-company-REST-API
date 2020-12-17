@@ -5,15 +5,6 @@ import { NavLink } from "react-router-dom";
 class CourierNew extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeBase = this.handleChangeBase.bind(this);
-    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(
-      this
-    );
-    this.handleChangeConfirmPassword2 = this.handleChangeConfirmPassword2.bind(
-      this
-    );
-    this.handleChangeDistrict = this.handleChangeDistrict.bind(this);
 
     this.state = {
       courier: {
@@ -34,6 +25,7 @@ class CourierNew extends Component {
         confirmPasswordFirst: [],
         email: [],
       },
+      active: this.props.location.active,
     };
   }
 
@@ -59,7 +51,7 @@ class CourierNew extends Component {
       });
   }
 
-  handleChangeBase(e) {
+  handleChangeBase = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let courier = this.state.courier;
@@ -67,46 +59,36 @@ class CourierNew extends Component {
     this.setState({
       courier,
     });
-  }
+  };
 
-  handleChangeConfirmPassword(e) {
+  handleChangeConfirmPassword = (e) => {
     const value = e.target.value;
     let courier = this.state.courier;
     courier.user.confirmPassword.first = value;
     this.setState({
       courier,
     });
-  }
+  };
 
-  handleChangeConfirmPassword2(e) {
+  handleChangeConfirmPassword2 = (e) => {
     const value = e.target.value;
     let courier = this.state.courier;
     courier.user.confirmPassword.second = value;
     this.setState({
       courier,
     });
-  }
+  };
 
-  handleChangeDistrict(e) {
+  handleChangeDistrict = (e) => {
     const value = e.target.value;
     const courier = this.state.courier;
     courier.district = value;
     this.setState({
       courier,
     });
-  }
+  };
 
-  handleSubmit(e) {
-    // this.setState({
-    //   courier: {
-    //     user: {
-    //       name: this.refs.name.value,
-    //       surname: this.refs.surname.value,
-    //       phoneNumber: this.refs.phoneNumber.value,
-    //       email: this.refs.email.value,
-    //     },
-    //   },
-    // });
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.courier);
     fetch("http://localhost:8000/api/courier/new", {
@@ -119,7 +101,6 @@ class CourierNew extends Component {
     })
       .then((response) => {
         if (response.status === 201) {
-          this.props.history.push("/courier");
           return response;
         }
         if (response.status === 400) {
@@ -129,8 +110,16 @@ class CourierNew extends Component {
         }
         throw new Error("Someting went wrong...");
       })
+      .then((response) => response.json())
+      .then((courier) => {
+        this.props.history.push({
+          pathname: "/courier",
+          state: { courierNewId: courier.user.id },
+          active: true,
+        });
+      })
       .catch((error) => console.log(error));
-  }
+  };
 
   handleErrorForm(res) {
     let error = this.state.error;
@@ -152,7 +141,7 @@ class CourierNew extends Component {
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "30px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Create new courier
         </h1>
@@ -163,16 +152,16 @@ class CourierNew extends Component {
               style={{ borderRadius: "10px" }}
             >
               <br />
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Name:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     id="name"
                     name="name"
@@ -181,14 +170,14 @@ class CourierNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="surname"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Surname:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -199,14 +188,14 @@ class CourierNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Password:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -224,15 +213,15 @@ class CourierNew extends Component {
                   )}
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Confirm Password
                 </label>
 
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -243,14 +232,14 @@ class CourierNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="phoneNumber"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Phone Number
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -261,14 +250,14 @@ class CourierNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="email"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   E-mail
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="email"
@@ -279,14 +268,14 @@ class CourierNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="district"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   District:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <select
                     className="form-control"
                     name="district"

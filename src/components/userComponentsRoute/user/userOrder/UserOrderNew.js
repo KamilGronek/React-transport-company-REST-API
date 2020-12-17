@@ -1,26 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-
+import { Link } from "react-scroll";
+import { animateScroll as scroll } from "react-scroll";
 class UserOrderNew extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeBase = this.handleChangeBase.bind(this);
-    this.handleChangeSenderDetails = this.handleChangeSenderDetails.bind(this);
-    this.handleChangeRecipientDetails = this.handleChangeRecipientDetails.bind(
-      this
-    );
-    this.handleChangePackage = this.handleChangePackage.bind(this);
-    this.handleChangeHeadquarters = this.handleChangeHeadquarters.bind(this);
-    this.handleSelectSenderDistrict = this.handleSelectSenderDistrict.bind(
-      this
-    );
-    this.handleSelectRecipientDistrict = this.handleSelectRecipientDistrict.bind(
-      this
-    );
-
-    this.fetchHeadquarters = this.fetchHeadquarters.bind(this);
-    this.fetchDistricts = this.fetchDistricts.bind(this);
 
     this.state = {
       userOrder: {
@@ -59,10 +43,18 @@ class UserOrderNew extends Component {
       },
       allHeadquarters: [],
       allDistrict: [],
+      changeArrow: true,
+      active: this.props.location.active,
     };
   }
 
-  handleChangeBase(e) {
+  handleSwitchArrow = () => {
+    this.setState({
+      changeArrow: !this.state.changeArrow,
+    });
+  };
+
+  handleChangeBase = (e) => {
     console.log(this.state);
     const value = e.target.value;
     const name = e.target.name;
@@ -72,9 +64,9 @@ class UserOrderNew extends Component {
       userOrder,
     });
     console.log(this.state);
-  }
+  };
 
-  handleChangePackage(e) {
+  handleChangePackage = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let packageValue = this.state.userOrder.package;
@@ -82,9 +74,9 @@ class UserOrderNew extends Component {
     this.setState({
       packageValue,
     });
-  }
+  };
 
-  handleChangeSenderDetails(e) {
+  handleChangeSenderDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let senderDetails = this.state.userOrder.senderDetails;
@@ -92,9 +84,9 @@ class UserOrderNew extends Component {
     this.setState({
       senderDetails,
     });
-  }
+  };
 
-  handleChangeRecipientDetails(e) {
+  handleChangeRecipientDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let recipientDetails = this.state.userOrder.recipientDetails;
@@ -102,32 +94,32 @@ class UserOrderNew extends Component {
     this.setState({
       recipientDetails,
     });
-  }
+  };
   //---------------------------------------------------------
 
-  handleChangeHeadquarters(e) {
+  handleChangeHeadquarters = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.headquarters = e.target.value;
     this.setState({
       userOrder,
     });
-  }
+  };
 
-  handleSelectSenderDistrict(e) {
+  handleSelectSenderDistrict = (e) => {
     const value = e.target.value;
     let userOrder = this.state.userOrder;
     userOrder.senderDetails.district = value;
     this.setState({
       userOrder,
     });
-  }
-  handleSelectRecipientDistrict(e) {
+  };
+  handleSelectRecipientDistrict = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.recipientDetails.district = e.target.value;
     this.setState({
       userOrder,
     });
-  }
+  };
 
   fetchHeadquarters() {
     fetch("http://localhost:8000/api/headquarters/", {
@@ -180,7 +172,7 @@ class UserOrderNew extends Component {
     this.fetchDistricts();
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.userOrder);
     fetch("http://localhost:8000/api/user-order/new", {
@@ -193,7 +185,6 @@ class UserOrderNew extends Component {
     })
       .then((response) => {
         if (response.status === 201) {
-          this.props.history.push("/user-order");
           return response;
         }
         if (response.status === 400) {
@@ -201,15 +192,24 @@ class UserOrderNew extends Component {
         }
         throw new Error("Something went wrong...");
       })
+      .then((response) => response.json())
+      .then((userOrder) => {
+        this.props.history.push({
+          pathname: "/user-order",
+          state: { userOrderId: userOrder.id },
+          active: true,
+        });
+      })
+
       .catch((error) => console.log(error));
-  }
+  };
 
   render() {
     return (
       <>
         <h1
           className="m-3 display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Create user order
         </h1>
@@ -379,29 +379,52 @@ class UserOrderNew extends Component {
                 className=" row justify-content-center col-6 offset-3"
                 id="headingThree "
               >
-                <h5 className="mb-0">
-                  <button
+                <h5 className="mb-0 ">
+                  <Link
+                    to="continuedOrder"
+                    smooth={true}
+                    duration={1000}
                     type="button"
                     className="btn btn-link collapsed"
                     data-toggle="collapse"
                     data-target="#collapseThree"
                     aria-expanded="false"
                     aria-controls="collapseThree"
+                    onClick={this.handleSwitchArrow}
+                    style={{ fontSize: "11px" }}
                   >
-                    show further part order
-                  </button>
+                    continued order
+                  </Link>
 
-                  <i class="arrow down"></i>
+                  <Link
+                    to="continuedOrder"
+                    smooth={true}
+                    duration={1000}
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                    className={
+                      "arrow " + (this.state.changeArrow ? "down" : "up")
+                    }
+                    onClick={this.handleSwitchArrow}
+                  >
+                    {" "}
+                  </Link>
                 </h5>
               </div>
 
+              <div class="col-6 offset-3">
+                <hr style={{ marginTop: "-1em" }} />
+              </div>
               <div
                 id="collapseThree"
                 className="collapse"
                 aria-labelledby="headingThree"
                 data-parent="#accordion"
               >
-                <div className="row justify-content-center ">
+                <div className="row justify-content-center" id="continuedOrder">
                   <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
                     <br />
                     <strong>Sender details:</strong>
@@ -744,22 +767,20 @@ class UserOrderNew extends Component {
               </div>
             </div>
           </div>
-          <div className="text-center" style={{ marginTop: 20 }}>
-            <button
-              className="btn btn-success  btn-circle btn-lg"
-              type="submit"
-            >
+          <div className="text-center" style={{ marginTop: "20px" }}>
+            <button className="btn btn-success btn-circle btn-lg" type="submit">
               CREATE
             </button>
           </div>
           <div className="d-flex flex-column">
-            <NavLink to="/user" style={{ textAlign: "center" }}>
+            <NavLink to="/user-order" style={{ textAlign: "center" }}>
               back to list
             </NavLink>
             <NavLink to="" style={{ textAlign: "center" }}>
               logout
             </NavLink>
           </div>
+          <br />
         </form>
         {/* <div className="row justify-content-center ">
             <div

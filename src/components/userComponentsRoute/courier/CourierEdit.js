@@ -157,7 +157,7 @@ class CourierEdit extends Component {
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "30px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Courier edit
         </h1>

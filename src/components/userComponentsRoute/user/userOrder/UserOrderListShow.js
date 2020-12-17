@@ -99,7 +99,7 @@ class UserOrderListShow extends Component {
                 <td>{this.state.userOrder.courier.user.name}</td>
 
                 <td className="d-flex flex-column align-items-center">
-                  <NavLink to="/user"> back to list </NavLink>
+                  <NavLink to="/user-order"> back to list </NavLink>
                   <NavLink
                     to={{
                       pathname: "/user-order/edit",

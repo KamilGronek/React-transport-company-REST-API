@@ -15,17 +15,57 @@ class CourierList extends Component {
     const district = this.props.courier.district.name;
     const courierId = this.props.courier.id;
 
+    const { courierNewId } = this.props;
+
     return (
       <>
         <tbody>
           <tr>
-            <td>{id}</td>
-            <td>{name}</td>
-            <td>{surname}</td>
-            <td>{role}</td>
-            <td>{phone_number}</td>
-            <td>{username}</td>
-            <td>{district}</td>
+            <td>
+              {id === courierNewId ? <span className="green"> {id} </span> : id}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {name}</span>
+              ) : (
+                name
+              )}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {surname}</span>
+              ) : (
+                surname
+              )}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {role}</span>
+              ) : (
+                role
+              )}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {phone_number}</span>
+              ) : (
+                phone_number
+              )}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {username}</span>
+              ) : (
+                username
+              )}
+            </td>
+            <td>
+              {id === courierNewId ? (
+                <span className="green"> {district}</span>
+              ) : (
+                district
+              )}
+            </td>
             <td>
               <NavLink
                 to={{

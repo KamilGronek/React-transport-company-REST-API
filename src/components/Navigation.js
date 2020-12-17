@@ -49,7 +49,7 @@ class Navigation extends Component {
 
     return (
       <nav
-        className="navbar navbar-expand-lg navbar-light bg-light"
+        className="navbar navbar-expand-lg navbar-light bg-light fixed-top"
         style={{ padding: "0 30 0 30" }}
       >
         <NavLink className="navbar-brand" to="#">

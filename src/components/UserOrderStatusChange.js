@@ -92,7 +92,7 @@ class UserOrderStatusChange extends Component {
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ paddingTop: "30px" }}
+          style={{ paddingTop: "100px" }}
         >
           Edit status
         </h1>

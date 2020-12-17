@@ -5,14 +5,6 @@ import { NavLink } from "react-router-dom";
 class UserNew extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeBase = this.handleChangeBase.bind(this);
-    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(
-      this
-    );
-    this.handleChangeConfirmPassword2 = this.handleChangeConfirmPassword2.bind(
-      this
-    );
     this.state = {
       user: {
         name: "",
@@ -27,12 +19,12 @@ class UserNew extends Component {
       error: {
         confirmPasswordFirst: [],
         email: [],
-        // surname: [],
       },
+      active: this.props.location.active,
     };
   }
 
-  handleChangeBase(e) {
+  handleChangeBase = (e) => {
     console.log(this.state);
     const value = e.target.value;
     const name = e.target.name;
@@ -42,9 +34,9 @@ class UserNew extends Component {
       user,
     });
     console.log(this.state);
-  }
+  };
 
-  handleChangeConfirmPassword(e) {
+  handleChangeConfirmPassword = (e) => {
     // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
@@ -54,9 +46,9 @@ class UserNew extends Component {
     this.setState({
       user,
     });
-  }
+  };
 
-  handleChangeConfirmPassword2(e) {
+  handleChangeConfirmPassword2 = (e) => {
     // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
@@ -65,9 +57,9 @@ class UserNew extends Component {
     this.setState({
       user,
     });
-  }
+  };
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.user);
     fetch("http://localhost:8000/api/user/new", {
@@ -79,8 +71,8 @@ class UserNew extends Component {
       }),
     })
       .then((response) => {
+        console.log(response);
         if (response.status === 201) {
-          this.props.history.push("/user");
           return response;
         }
         if (response.status === 400) {
@@ -90,8 +82,18 @@ class UserNew extends Component {
         }
         throw new Error("Something went wrong ...");
       })
+      .then((response) => response.json())
+      .then((user) => {
+        console.log(this.props.history.location.active);
+        console.log(this.state.active);
+        this.props.history.push({
+          pathname: "/user",
+          state: { userId: user.id },
+          active: true,
+        });
+      })
       .catch((error) => console.log(error));
-  }
+  };
 
   handleErrorForm = (res) => {
     let error = this.state.error;
@@ -120,7 +122,7 @@ class UserNew extends Component {
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "30px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Create new user
         </h1>
@@ -134,13 +136,13 @@ class UserNew extends Component {
               <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Name:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     id="name"
                     name="name"
@@ -149,14 +151,14 @@ class UserNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="surname"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Surname:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -167,14 +169,14 @@ class UserNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Password:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -192,15 +194,15 @@ class UserNew extends Component {
                   )}
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  Confirm Password
+                  Confirm Password:
                 </label>
 
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -211,14 +213,14 @@ class UserNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="phoneNumber"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  Phone Number
+                  Phone Number:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -229,14 +231,14 @@ class UserNew extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="email"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  E-mail
+                  E-mail:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="email"
@@ -258,6 +260,7 @@ class UserNew extends Component {
           </div>
           <div className="text-center" style={{ marginTop: 20 }}>
             <button
+              // onClick={this.PassActiveUserId}
               className="btn btn-success  btn-circle btn-lg"
               type="submit"
             >
@@ -265,10 +268,22 @@ class UserNew extends Component {
             </button>
           </div>
           <div className="d-flex flex-column">
-            <NavLink to="/user/" style={{ textAlign: "center" }}>
+            <NavLink
+              to={{
+                pathname: "/user",
+                state: { userId: 0 },
+              }}
+              style={{ textAlign: "center" }}
+            >
               back to list
             </NavLink>
-            <NavLink to="/login" style={{ textAlign: "center" }}>
+            <NavLink
+              to={{
+                pathname: "/login",
+                state: { userId: 0 },
+              }}
+              style={{ textAlign: "center" }}
+            >
               logout
             </NavLink>
           </div>

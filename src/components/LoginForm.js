@@ -4,7 +4,7 @@ import "../styles/LoginForm.css";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
@@ -36,7 +36,7 @@ class LoginForm extends Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     let json = JSON.stringify({
@@ -65,7 +65,7 @@ class LoginForm extends Component {
         this.props.history.push("/user");
       })
       .catch((error) => console.log(error));
-  }
+  };
 
   render() {
     return (

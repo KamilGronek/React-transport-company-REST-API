@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
 import UserOrderDelete from "./UserOrderDelete";
 
 class UserOrderEdit extends Component {
@@ -61,8 +62,15 @@ class UserOrderEdit extends Component {
       },
       allHeadquarters: [],
       allDistrict: [],
+      changeArrow: true,
     };
   }
+
+  handleSwitchArrow = () => {
+    this.setState({
+      changeArrow: !this.state.changeArrow,
+    });
+  };
 
   handleChangeBase(e) {
     console.log(this.state);
@@ -281,7 +289,7 @@ class UserOrderEdit extends Component {
       <>
         <h1
           className="m-2 display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Edit order user
         </h1>
@@ -452,22 +460,49 @@ class UserOrderEdit extends Component {
               </div>
             </div>
           </div>
-          //=================================
+
           <div id="accordion">
-            <div class="card">
-              <div class="card-header" id="headingThree">
+            <div>
+              <div
+                className=" row justify-content-center col-6 offset-3"
+                id="headingThree "
+              >
                 <h5 class="mb-0">
-                  <button
+                  <Link
+                    to="continuedOrder"
+                    smooth={true}
+                    duration={1000}
                     type="button"
-                    class="btn btn-link collapsed"
+                    className="btn btn-link collapsed"
                     data-toggle="collapse"
                     data-target="#collapseThree"
                     aria-expanded="false"
                     aria-controls="collapseThree"
+                    onClick={this.handleSwitchArrow}
+                    style={{ fontSize: "11px" }}
                   >
-                    Collapsible Group Item #3
-                  </button>
+                    continued order
+                  </Link>
+
+                  <Link
+                    to="continuedOrder"
+                    smooth={true}
+                    duration={1000}
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                    className={
+                      "arrow " + (this.state.changeArrow ? "down" : "up")
+                    }
+                    onClick={this.handleSwitchArrow}
+                  ></Link>
                 </h5>
+              </div>
+
+              <div class="col-6 offset-3">
+                <hr style={{ marginTop: "-1em" }} />
               </div>
               <div
                 id="collapseThree"
@@ -475,7 +510,7 @@ class UserOrderEdit extends Component {
                 aria-labelledby="headingThree"
                 data-parent="#accordion"
               >
-                <div className="row justify-content-center ">
+                <div className="row justify-content-center" id="continuedOrder">
                   <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
                     <br />
                     <strong>Sender details:</strong>
@@ -846,13 +881,14 @@ class UserOrderEdit extends Component {
             </button>
           </div>
           <div className="d-flex flex-column">
-            <NavLink to="/user" style={{ textAlign: "center" }}>
+            <NavLink to="/user-order" style={{ textAlign: "center" }}>
               back to list
             </NavLink>
             <NavLink to="" style={{ textAlign: "center" }}>
               logout
             </NavLink>
           </div>
+          <br />
         </form>
       </>
     );
