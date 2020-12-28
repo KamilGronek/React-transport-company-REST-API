@@ -54,7 +54,7 @@ class UserListShow extends Component {
                 <td>{role}</td>
                 <td>{phone_number}</td>
                 <td>{username}</td>
-                <td class="d-flex justify-content-around">
+                <td className="d-flex justify-content-around">
                   <NavLink to="/user"> back to list </NavLink>
 
                   <NavLink

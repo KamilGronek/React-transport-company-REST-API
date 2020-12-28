@@ -11,28 +11,35 @@ import UserComponents from "./components/UserComponents";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.setAccessToken = this.setAccessToken.bind(this);
+    this.state = {
+      // accessToken: "",
+    };
   }
 
-  setAccessToken(accessTokenParam) {
+  setAccessToken = (accessTokenParam) => {
     localStorage.setItem("accessToken", accessTokenParam);
-  }
+  };
 
   getAccessToken() {
     return localStorage.getItem("accessToken");
   }
 
+  // getAccessToken(accessTokenParam) {
+  //   this.setState({
+  //     accessToken: accessTokenParam,
+  //   });
+  // }
+
   render() {
     return (
       <Router>
-        <Route
-          path="/"
-          render={() => <Navigation accessToken={this.getAccessToken()} />}
-        />
+        <Navigation accessToken={this.getAccessToken()} />
+
         <Route
           path="/login"
           render={(props) => (
             <LoginForm {...props} setAccessToken={this.setAccessToken} />
+            // <LoginForm {...props} getAccessToken={this.getAccessToken} />
           )}
         />
         <Route

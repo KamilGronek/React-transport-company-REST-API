@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-import { animateScroll as scroll } from "react-scroll";
+
 class UserOrderNew extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +44,7 @@ class UserOrderNew extends Component {
       allHeadquarters: [],
       allDistrict: [],
       changeArrow: true,
+      hrLine: true,
       active: this.props.location.active,
     };
   }
@@ -51,6 +52,7 @@ class UserOrderNew extends Component {
   handleSwitchArrow = () => {
     this.setState({
       changeArrow: !this.state.changeArrow,
+      hrLine: !this.state.hrLine,
     });
   };
 
@@ -215,7 +217,7 @@ class UserOrderNew extends Component {
         </h1>
         <form onSubmit={this.handleSubmit}>
           <div className="row justify-content-center ">
-            <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
+            <div className=" col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
               <br />
               <strong>Details:</strong>
               <div className="form-group row">
@@ -372,10 +374,17 @@ class UserOrderNew extends Component {
               </div>
             </div>
           </div>
-
+          {this.state.hrLine && (
+            <div className="col-2 offset-5">
+              <div className="col-4 offset-4">
+                <hr className="hr" />
+              </div>
+            </div>
+          )}
           <div id="accordion">
             <div>
               <div
+                style={{ paddingBottom: "10px" }}
                 className=" row justify-content-center col-6 offset-3"
                 id="headingThree "
               >
@@ -415,9 +424,6 @@ class UserOrderNew extends Component {
                 </h5>
               </div>
 
-              <div class="col-6 offset-3">
-                <hr style={{ marginTop: "-1em" }} />
-              </div>
               <div
                 id="collapseThree"
                 className="collapse"
@@ -767,7 +773,7 @@ class UserOrderNew extends Component {
               </div>
             </div>
           </div>
-          <div className="text-center" style={{ marginTop: "20px" }}>
+          <div className="text-center">
             <button className="btn btn-success btn-circle btn-lg" type="submit">
               CREATE
             </button>

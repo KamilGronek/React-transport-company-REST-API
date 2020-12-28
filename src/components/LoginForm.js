@@ -4,9 +4,6 @@ import "../styles/LoginForm.css";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
     this.state = {
       email: "",
       password: "",
@@ -17,6 +14,7 @@ class LoginForm extends Component {
         errorsEmail: false,
         errorsPassword: false,
       },
+      // navigation: !this.props.navigation,
     };
   }
 
@@ -28,13 +26,13 @@ class LoginForm extends Component {
     });
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     this.setState({
       [name]: value,
     });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -62,6 +60,8 @@ class LoginForm extends Component {
       .then((response) => response.json())
       .then((res) => {
         this.props.setAccessToken(res.access_token);
+        // this.props.getAccessToken(res.access_token);
+
         this.props.history.push("/user");
       })
       .catch((error) => console.log(error));
@@ -72,7 +72,7 @@ class LoginForm extends Component {
       <>
         <div className="container">
           <form
-            style={{ borderRadius: "10px" }}
+            // style={{ borderRadius: "10px" }}
             className="m-5 border bg-light mx-auto col-xl-4 col-lg-4 col-sm-6  col-10 offset-xl-4 offset-lg-4 offset-sm-3 offset-1"
             onSubmit={this.handleSubmit}
           >
@@ -134,6 +134,40 @@ class LoginForm extends Component {
             </div>
             <br />
           </form>
+          <table className="bg-light  table table-striped table-hover table-sm table-responsive-sm col-4 offset-4  mx-auto ">
+            <thead className="thead-dark ">
+              <tr>
+                <th scope="col">name</th>
+                <th scope="col">e-mail adress</th>
+                <th scope="col">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">admin:</th>
+                <td>admin@admin.pl</td>
+                <td>admin</td>
+              </tr>
+              <tr>
+                <th scope="row">user:</th>
+                <td>user@user.pl</td>
+                <td>user</td>
+              </tr>
+              <tr>
+                <th scope="row">courier:</th>
+                <td>bemowo@courier.com</td>
+                <td>bemowo</td>
+              </tr>
+            </tbody>
+          </table>
+          <footer
+            className="  row text-center align-items-center fixed-bottom bg-light"
+            style={{ height: "40px" }}
+          >
+            <div className="col-12">
+              <b>&copy; KamilGronek2020</b>
+            </div>
+          </footer>
         </div>
       </>
     );

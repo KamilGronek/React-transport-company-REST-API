@@ -2,8 +2,32 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 class UserList extends Component {
+  setColorForStatus() {
+    if (this.props.userOrder.status === "PROVIDED") {
+      return <span className="lightgreen">{this.props.userOrder.status}</span>;
+    }
+    if (this.props.userOrder.id === this.props.userOrderId) {
+      return <span className="green"> {this.props.userOrder.status}</span>;
+    } else {
+      return this.props.userOrder.status;
+    }
+  }
+
+  setColorForCourier() {
+    if (this.props.userOrder.courier === null) {
+      return <span className="red"> courier expired</span>;
+    }
+    if (this.props.userOrder.id === this.props.userOrderId) {
+      return (
+        <span className="green"> {this.props.userOrder.courier.user.name}</span>
+      );
+    } else {
+      return this.props.userOrder.courier.user.name;
+    }
+  }
+
   render() {
-    const { id, number, description, comments, status } = this.props.userOrder;
+    const { id, number, description, comments } = this.props.userOrder;
     const { userOrderId } = this.props;
     return (
       <>
@@ -97,25 +121,8 @@ class UserList extends Component {
                 this.props.userOrder.recipient_details.name
               )}
             </td>
-            {/* {id === userOrderId ? (
-                <span className="green"> {status}</span>
-              ) : (
-                status
-              )} */}
-            <td>
-              {status === "PROVIDED" ? (
-                <span className="lightgreen">{status}</span>
-              ) : (
-                status
-              )}
-            </td>
-            <td>
-              {this.props.userOrder.courier === null ? (
-                <span style={{ color: "red" }}> courier expired</span>
-              ) : (
-                this.props.userOrder.courier.user.name
-              )}
-            </td>
+            <td>{this.setColorForStatus()}</td>
+            <td>{this.setColorForCourier()}</td>
             <td>
               <NavLink
                 to={{

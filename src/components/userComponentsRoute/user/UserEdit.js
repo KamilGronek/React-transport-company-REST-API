@@ -7,14 +7,6 @@ import UserEditForm from "./UserEditForm";
 class UserEdit extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeBase = this.handleChangeBase.bind(this);
-    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(
-      this
-    );
-    this.handleChangeConfirmPassword2 = this.handleChangeConfirmPassword2.bind(
-      this
-    );
 
     this.state = {
       user: {
@@ -68,7 +60,7 @@ class UserEdit extends Component {
       .catch((error) => console.log(error));
   }
 
-  handleChangeBase(e) {
+  handleChangeBase = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let user = this.state.user;
@@ -77,9 +69,9 @@ class UserEdit extends Component {
       // [name]: value,
       user,
     });
-  }
+  };
 
-  handleChangeConfirmPassword(e) {
+  handleChangeConfirmPassword = (e) => {
     const value = e.target.value;
     let user = this.state.user;
     user.confirmPassword.first = value;
@@ -90,9 +82,9 @@ class UserEdit extends Component {
       //   second: this.state.user.confirmPassword.second,
       user,
     });
-  }
+  };
 
-  handleChangeConfirmPassword2(e) {
+  handleChangeConfirmPassword2 = (e) => {
     const value = e.target.value;
     let user = this.state.user;
     // user["confirmPassword"]["first"] = this.state.user.confirmPassword.first;
@@ -104,9 +96,9 @@ class UserEdit extends Component {
       //   second: value,
       // },
     });
-  }
+  };
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.user);
     fetch(
@@ -134,7 +126,7 @@ class UserEdit extends Component {
       })
 
       .catch((error) => console.log(error));
-  }
+  };
 
   handleErrorForm = (res) => {
     let error = this.state.error;

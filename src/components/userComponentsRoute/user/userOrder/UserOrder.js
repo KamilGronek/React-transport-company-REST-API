@@ -116,7 +116,7 @@ class UserOrder extends Component {
             <UserOrderListHeader />
             {this.getOrders()}
           </table>
-          <hr style={{ marginTop: "10px" }} />
+          <hr className="hr" style={{ marginTop: "10px" }} />
           <div className="d-flex flex-column">
             <div className=" row justify-content-center">
               <h5 className="mb-0 ">

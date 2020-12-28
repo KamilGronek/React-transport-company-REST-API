@@ -1,30 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-import UserOrderDelete from "./UserOrderDelete";
 
 class UserOrderEdit extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeBase = this.handleChangeBase.bind(this);
-    this.handleChangeSenderDetails = this.handleChangeSenderDetails.bind(this);
-    this.handleChangeRecipientDetails = this.handleChangeRecipientDetails.bind(
-      this
-    );
-    this.handleChangePackage = this.handleChangePackage.bind(this);
-    this.handleChangeHeadquarters = this.handleChangeHeadquarters.bind(this);
-    this.handleSelectSenderDistrict = this.handleSelectSenderDistrict.bind(
-      this
-    );
-    this.handleSelectRecipientDistrict = this.handleSelectRecipientDistrict.bind(
-      this
-    );
-
-    this.fetchHeadquarters = this.fetchHeadquarters.bind(this);
-    this.fetchDistricts = this.fetchDistricts.bind(this);
-    this.getUserOrderEditValues = this.getUserOrderEditValues.bind(this);
-
     this.state = {
       userOrder: {
         number: "",
@@ -63,16 +43,18 @@ class UserOrderEdit extends Component {
       allHeadquarters: [],
       allDistrict: [],
       changeArrow: true,
+      hrLine: true,
     };
   }
 
   handleSwitchArrow = () => {
     this.setState({
       changeArrow: !this.state.changeArrow,
+      hrLine: !this.state.hrLine,
     });
   };
 
-  handleChangeBase(e) {
+  handleChangeBase = (e) => {
     console.log(this.state);
     const value = e.target.value;
     const name = e.target.name;
@@ -82,9 +64,9 @@ class UserOrderEdit extends Component {
       userOrder,
     });
     console.log(this.state);
-  }
+  };
 
-  handleChangePackage(e) {
+  handleChangePackage = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let packageValue = this.state.userOrder.package;
@@ -92,9 +74,9 @@ class UserOrderEdit extends Component {
     this.setState({
       packageValue,
     });
-  }
+  };
 
-  handleChangeSenderDetails(e) {
+  handleChangeSenderDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let senderDetails = this.state.userOrder.senderDetails;
@@ -102,9 +84,9 @@ class UserOrderEdit extends Component {
     this.setState({
       senderDetails,
     });
-  }
+  };
 
-  handleChangeRecipientDetails(e) {
+  handleChangeRecipientDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
     let recipientDetails = this.state.userOrder.recipientDetails;
@@ -112,33 +94,33 @@ class UserOrderEdit extends Component {
     this.setState({
       recipientDetails,
     });
-  }
+  };
   //---------------------------------------------------------
 
-  handleChangeHeadquarters(e) {
+  handleChangeHeadquarters = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.headquarters = e.target.value;
     this.setState({
       userOrder,
     });
-  }
+  };
 
-  handleSelectSenderDistrict(e) {
+  handleSelectSenderDistrict = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.senderDetails.district = e.target.value;
     this.setState({
       userOrder,
     });
-  }
-  handleSelectRecipientDistrict(e) {
+  };
+  handleSelectRecipientDistrict = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.recipientDetails.district = e.target.value;
     this.setState({
       userOrder,
     });
-  }
+  };
 
-  fetchHeadquarters() {
+  fetchHeadquarters = () => {
     fetch("http://localhost:8000/api/headquarters/", {
       method: "get",
       headers: new Headers({
@@ -159,9 +141,9 @@ class UserOrderEdit extends Component {
         });
       })
       .catch((error) => console.log(error));
-  }
+  };
 
-  fetchDistricts() {
+  fetchDistricts = () => {
     fetch("http://localhost:8000/api/district/", {
       method: "get",
       headers: new Headers({
@@ -182,9 +164,9 @@ class UserOrderEdit extends Component {
         });
       })
       .catch((error) => console.log(error));
-  }
+  };
 
-  getUserOrderEditValues() {
+  getUserOrderEditValues = () => {
     fetch("http://localhost:8000/api/user-order/" + this.props.location.id, {
       //read
       method: "get",
@@ -239,7 +221,7 @@ class UserOrderEdit extends Component {
         });
       })
       .catch((error) => console.log(error));
-  }
+  };
 
   componentDidMount() {
     this.fetchHeadquarters();
@@ -247,7 +229,7 @@ class UserOrderEdit extends Component {
     this.getUserOrderEditValues();
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.userOrder);
     fetch(
@@ -274,7 +256,7 @@ class UserOrderEdit extends Component {
         throw new Error("Something went wrong...");
       })
       .catch((error) => console.log(error));
-  }
+  };
 
   render() {
     const {
@@ -298,14 +280,14 @@ class UserOrderEdit extends Component {
             <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
               <br />
               <strong>Details:</strong>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Number:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -317,14 +299,14 @@ class UserOrderEdit extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Description:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -336,14 +318,14 @@ class UserOrderEdit extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Headquarters:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <select
                     className="form-control"
                     name="headquarters"
@@ -358,14 +340,14 @@ class UserOrderEdit extends Component {
                   </select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Comments:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -382,16 +364,16 @@ class UserOrderEdit extends Component {
             <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
               <br />
               <strong>Package:</strong>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Weight:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="number"
                     id="weight"
                     name="weight"
@@ -401,14 +383,14 @@ class UserOrderEdit extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Height:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="number"
@@ -420,14 +402,14 @@ class UserOrderEdit extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Length:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="number"
@@ -439,14 +421,14 @@ class UserOrderEdit extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Width:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="number"
@@ -460,14 +442,21 @@ class UserOrderEdit extends Component {
               </div>
             </div>
           </div>
-
+          {this.state.hrLine && (
+            <div className="col-2 offset-5">
+              <div className="col-4 offset-4">
+                <hr className="hr" />
+              </div>
+            </div>
+          )}
           <div id="accordion">
             <div>
               <div
+                style={{ paddingBottom: "10px" }}
                 className=" row justify-content-center col-6 offset-3"
                 id="headingThree "
               >
-                <h5 class="mb-0">
+                <h5 className="mb-0">
                   <Link
                     to="continuedOrder"
                     smooth={true}
@@ -501,12 +490,9 @@ class UserOrderEdit extends Component {
                 </h5>
               </div>
 
-              <div class="col-6 offset-3">
-                <hr style={{ marginTop: "-1em" }} />
-              </div>
               <div
                 id="collapseThree"
-                class="collapse"
+                className="collapse"
                 aria-labelledby="headingThree"
                 data-parent="#accordion"
               >
@@ -514,14 +500,14 @@ class UserOrderEdit extends Component {
                   <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
                     <br />
                     <strong>Sender details:</strong>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Name:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -533,14 +519,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Surname:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -552,14 +538,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         City:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -571,14 +557,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Street:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -590,14 +576,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         House number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -609,14 +595,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Apartment number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -628,14 +614,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Phone number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -647,14 +633,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         E-mail:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -666,14 +652,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         District:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <select
                           className="form-control"
                           name="senderDetailsDistrict"
@@ -693,16 +679,16 @@ class UserOrderEdit extends Component {
                   <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
                     <br />
                     <strong>Recipient details:</strong>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className="col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Name:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
-                          class="form-control"
+                          className="form-control"
                           type="text"
                           id="name"
                           name="name"
@@ -712,14 +698,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Surname:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -731,14 +717,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         City:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -750,14 +736,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Street:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -769,14 +755,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         House number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -788,14 +774,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Apartment number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -807,14 +793,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         Phone number:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -826,14 +812,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         E-mail:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <input
                           className="form-control"
                           type="text"
@@ -845,14 +831,14 @@ class UserOrderEdit extends Component {
                         />
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div className="form-group row">
                       <label
                         htmlFor="name"
-                        class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                        className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                       >
                         District:
                       </label>
-                      <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                      <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                         <select
                           className="form-control"
                           name="recipientDetailsDistrict"
@@ -872,7 +858,7 @@ class UserOrderEdit extends Component {
               </div>
             </div>
           </div>
-          <div className="text-center" style={{ marginTop: 20 }}>
+          <div className="text-center">
             <button
               className="btn btn-warning  btn-circle btn-lg"
               type="submit"

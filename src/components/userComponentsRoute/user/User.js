@@ -105,6 +105,7 @@ class User extends Component {
     console.log(this.state.count);
     this.scrollToBottom();
     this.showLessButton();
+    this.hideMoreButton();
   };
 
   handleDecrementCount = () => {
@@ -120,6 +121,11 @@ class User extends Component {
     });
   };
 
+  hideMoreButton = () => {
+    if (this.length) {
+    }
+  };
+
   // hideLessButton = () => {
   //   if (this.state.count > 1) {
   //     this.setState({
@@ -133,28 +139,30 @@ class User extends Component {
   //   console.log(this.state.showLessButton);
   // };
 
-  getOrders() {
+  getOrders = () => {
     let users = [...this.state.users];
     let n = 8;
     let increment = this.state.count;
     let decrement = this.state.count;
 
     let arrayLength = users.slice(0, n * increment || decrement);
+    let length = arrayLength.length;
     console.log(increment);
-    console.log(arrayLength.length);
+    console.log(arrayLength);
+    console.log(length);
     console.log(this.state.count);
 
     return arrayLength.map((user) => (
       <UserList key={user.id} user={user} userId={this.setActiveUserId()} />
     ));
-  }
+  };
 
   render() {
     const { role } = this.state.user;
 
     return (
       <>
-        <div className="container" style={{ paddingTop: "100px" }}>
+        <div className="container">
           <div className="text-center">
             <h1 className="display-4">User list</h1>
           </div>
@@ -162,7 +170,7 @@ class User extends Component {
             <UserListHeader />
             {this.getOrders()}
           </table>
-          <hr style={{ marginTop: "10px" }} />
+          <hr className="hr" style={{ marginTop: "10px" }} />
           {role === "ROLE_ADMIN" ? (
             <div className="d-flex flex-column">
               <div className=" row justify-content-center">
@@ -224,27 +232,3 @@ class User extends Component {
 }
 
 export default User;
-
-// divide() {
-//   let users = [...this.state.users];
-//   const n = 6;
-//   let result = [[], [], [], [], [], []];
-//   const wordsPerLine = Math.ceil(users.length / 6);
-//   for (let line = 0; line < n; line++) {
-//     for (let i = 0; i < wordsPerLine; i++) {
-//       const value = users[i + line * wordsPerLine];
-//       if (!value) continue;
-//       result[line].push(value);
-//     }
-//   }
-//   console.log(result);
-
-//   // let id = result[0].map((res) => res.name);
-//   // let id0 = id[0];
-//   // console.log(id0);
-//   // return <div>{id0}</div>;
-
-//   return result[0].map((res) => (
-//     <UserList key={res.id} res={res} userId={this.setActiveUserId()} />
-//   ));
-// }

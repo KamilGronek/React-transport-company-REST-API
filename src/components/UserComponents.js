@@ -22,6 +22,10 @@ import { Route, Switch } from "react-router-dom";
 import UserOrderStatusChange from "./UserOrderStatusChange";
 
 class UserComponents extends Component {
+  // ErrorPage = () => {
+  //   return <h1>Page doesn't exist</h1>;
+  // };
+
   render() {
     return (
       <>
@@ -119,6 +123,7 @@ class UserComponents extends Component {
               <UserOrderStatusChange {...this.props} location={location} />
             )}
           />
+          {/* <Route component={this.ErrorPage} /> */}
         </Switch>
       </>
     );
