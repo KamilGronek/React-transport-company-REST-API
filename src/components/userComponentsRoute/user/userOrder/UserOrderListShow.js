@@ -51,7 +51,7 @@ class UserOrderListShow extends Component {
             recipientDetails: userOrderRes.recipient_details,
             status: userOrderRes.status,
             courier: {
-              user: userOrderRes.user,
+              user: userOrderRes.courier.user,
             },
           },
         });

@@ -10,6 +10,7 @@ class UserListShow extends Component {
         user: {},
         district: {},
       },
+      deleteInfo: false,
     };
   }
 
@@ -37,8 +38,15 @@ class UserListShow extends Component {
       .catch((error) => console.log(error));
   }
 
+  alertDelete = () => {
+    this.setState({
+      deleteInfo: true,
+    });
+  };
+
   render() {
     console.log(this.props.accessToken);
+    // console.log(this.props.deleteInfo);
 
     const {
       id,
@@ -69,7 +77,7 @@ class UserListShow extends Component {
                 <td>{phone_number}</td>
                 <td>{username}</td>
                 <td>{district}</td>
-                <td class="d-flex justify-content-around">
+                <td className="d-flex justify-content-around">
                   <NavLink to="/courier"> back to list </NavLink>
                   <NavLink
                     to={{
@@ -79,11 +87,13 @@ class UserListShow extends Component {
                   >
                     edit
                   </NavLink>
+                  {/* {this.state.deleteInfo && alert("Can't delete course")} */}
 
                   <CourierDelete
                     {...this.props}
                     accessToken={this.props.accessToken}
                     id={this.props.location.id}
+                    alertDelete={this.alertDelete}
                   />
                 </td>
               </tr>

@@ -14,7 +14,6 @@ class LoginForm extends Component {
         errorsEmail: false,
         errorsPassword: false,
       },
-      // navigation: !this.props.navigation,
     };
   }
 
@@ -60,7 +59,7 @@ class LoginForm extends Component {
       .then((response) => response.json())
       .then((res) => {
         this.props.setAccessToken(res.access_token);
-        // this.props.getAccessToken(res.access_token);
+        this.props.reloadComponent();
 
         this.props.history.push("/user");
       })

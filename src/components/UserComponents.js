@@ -20,6 +20,7 @@ import CourierOrder from "./userComponentsRoute/courier/courierOrder/CourierOrde
 // import LoginForm from "./LoginForm";
 import { Route, Switch } from "react-router-dom";
 import UserOrderStatusChange from "./UserOrderStatusChange";
+import ErrorPage from "../ErrorPage";
 
 class UserComponents extends Component {
   // ErrorPage = () => {
@@ -87,7 +88,6 @@ class UserComponents extends Component {
 
           <Route
             path="/courier/new"
-            // exact
             render={() => <CourierNew {...this.props} />}
           />
 
@@ -123,7 +123,8 @@ class UserComponents extends Component {
               <UserOrderStatusChange {...this.props} location={location} />
             )}
           />
-          {/* <Route component={this.ErrorPage} /> */}
+
+          <Route path="/" exact render={() => <ErrorPage {...this.props} />} />
         </Switch>
       </>
     );
