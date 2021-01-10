@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-
-import { NavLink } from "react-router-dom";
-import { Link } from "react-scroll";
+import UserOrderEditForm from "./UserOrderEditForm";
+// import { NavLink } from "react-router-dom";
+// import { Link } from "react-scroll";
 
 class UserOrderEdit extends Component {
   constructor(props) {
@@ -262,6 +262,7 @@ class UserOrderEdit extends Component {
 
   render() {
     const {
+      headquarters,
       number,
       description,
       comments,
@@ -271,13 +272,39 @@ class UserOrderEdit extends Component {
 
     return (
       <>
-        <h1
+        <UserOrderEditForm
+          handleSubmit={this.handleSubmit}
+          handleChangeBase={this.handleChangeBase}
+          handleChangeHeadquarters={this.handleChangeHeadquarters}
+          allHeadquarters={this.state.allHeadquarters}
+          headquarters={headquarters}
+          handleChangePackage={this.handleChangePackage}
+          handleChangeSenderDetails={this.handleChangeSenderDetails}
+          handleSelectSenderDistrict={this.handleSelectSenderDistrict}
+          handleChangeRecipientDetails={this.handleChangeRecipientDetails}
+          handleSelectRecipientDistrict={this.handleSelectRecipientDistrict}
+          number={number}
+          description={description}
+          comments={comments}
+          senderDetails={senderDetails}
+          recipientDetails={recipientDetails}
+          changeArrow={this.state.changeArrow}
+          weight={this.state.userOrder.package.weight}
+          height={this.state.userOrder.package.height}
+          length={this.state.userOrder.package.length}
+          width={this.state.userOrder.package.width}
+          handleSwitchArrow={this.handleSwitchArrow}
+          hrLine={this.state.hrLine}
+          allDistrict={this.state.allDistrict}
+          district={this.state.userOrder.recipientDetails.district}
+        />
+
+        {/* <h1
           className="m-2 display-4 d-flex justify-content-center"
           style={{ fontSize: "40px", paddingTop: "100px" }}
         >
           Edit order user
         </h1>
-        {/* <UserOrderEditForm /> */}
         <form onSubmit={this.handleSubmit}>
           <div className="row justify-content-center ">
             <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
@@ -332,7 +359,7 @@ class UserOrderEdit extends Component {
                   <select
                     className="form-control"
                     name="headquarters"
-                    value={this.state.userOrder.headquarters}
+                    value={headquarters}
                     onChange={this.handleChangeHeadquarters}
                   >
                     {this.state.allHeadquarters.map((headquarter) => (
@@ -878,7 +905,7 @@ class UserOrderEdit extends Component {
             </NavLink>
           </div>
           <br />
-        </form>
+        </form> */}
       </>
     );
   }

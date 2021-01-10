@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-
+// import NumberField from "./fieldsFormComponent/NumberField";
+// import DescriptionField from "./fieldsFormComponent/DescriptionField";
+// import HeadquartersField from "./fieldsFormComponent/HeadquartersField";
 class UserOrderNewForm extends Component {
   render() {
     const {
-      handleSubmit,
       handleChangeBase,
       handleChangeHeadquarters,
       allHeadquarters,
@@ -28,11 +29,12 @@ class UserOrderNewForm extends Component {
         >
           Create user order
         </h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={this.props.handleSubmit}>
           <div className="row justify-content-center ">
             <div className=" col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
               <br />
               <strong>Details:</strong>
+
               <div className="form-group row">
                 <label
                   htmlFor="name"

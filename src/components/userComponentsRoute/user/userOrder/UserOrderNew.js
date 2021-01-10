@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import UserOrderNewForm from "./UserOrderNewForm";
-
+import { NavLink } from "react-router-dom";
+// import { Link } from "react-scroll";
+import UserOrderNewPiece from "./fieldsFormComponent/UserOrderNewPiece";
 class UserOrderNew extends Component {
   constructor(props) {
     super(props);
@@ -205,22 +207,51 @@ class UserOrderNew extends Component {
       .catch((error) => console.log(error));
   };
 
+  // render() {
+  //   return (
+  //     <UserOrderNewForm
+  //       handleSubmit={this.handleSubmit}
+  //       handleChangeBase={this.handleChangeBase}
+  //       handleChangeHeadquarters={this.handleChangeHeadquarters}
+  //       allDistrict={this.state.allDistrict}
+  //       handleChangePackage={this.handleChangePackage}
+  //       changeArrow={this.state.changeArrow}
+  //       handleSwitchArrow={this.handleSwitchArrow}
+  //       hrLine={this.state.hrLine}
+  //       allHeadquarters={this.state.allHeadquarters}
+  //       handleChangeSenderDetails={this.handleChangeSenderDetails}
+  //       handleSelectSenderDistrict={this.handleSelectSenderDistrict}
+  //       handleChangeRecipientDetails={this.handleChangeRecipientDetails}
+  //     />
+  //   );
+  // }
+
   render() {
     return (
-      <UserOrderNewForm
-        handleSubmit={this.handleSubmit}
-        handleChangeBase={this.handleChangeBase}
-        handleChangeHeadquarters={this.handleChangeHeadquarters}
-        handleChangePackage={this.handleChangePackage}
-        changeArrow={this.state.changeArrow}
-        handleSwitchArrow={this.handleSwitchArrow}
-        hrLine={this.state.hrLine}
-        allHeadquarters={this.state.allHeadquarters}
-        handleChangeSenderDetails={this.handleChangeSenderDetails}
-        handleSelectSenderDistrict={this.handleSelectSenderDistrict}
-        allDistrict={this.state.allDistrict}
-        handleChangeRecipientDetails={this.handleChangeRecipientDetails}
-      />
+      <>
+        <h1
+          className="m-3 display-4 d-flex justify-content-center"
+          style={{ fontSize: "40px", paddingTop: "100px" }}
+        >
+          Create user order
+        </h1>
+        <form onSubmit={this.handleSubmit}>
+          <UserOrderNewPiece
+            handleChangeBase={this.handleChangeBase}
+            handleChangeHeadquarters={this.handleChangeHeadquarters}
+            allHeadquarters={this.state.allHeadquarters}
+            handleChangePackage={this.handleChangePackage}
+            hrLine={this.state.hrLine}
+            handleSwitchArrow={this.handleSwitchArrow}
+            changeArrow={this.state.changeArrow}
+            handleChangeSenderDetails={this.handleChangeSenderDetails}
+            handleSelectSenderDistrict={this.handleSelectSenderDistrict}
+            handleChangeRecipientDetails={this.handleChangeRecipientDetails}
+            allDistrict={this.state.allDistrict}
+            handleSelectRecipientDistrict={this.handleSelectRecipientDistrict}
+          />
+        </form>
+      </>
     );
   }
 }
