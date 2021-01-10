@@ -87,7 +87,7 @@ class UserListShow extends Component {
                   >
                     edit
                   </NavLink>
-                  {/* {this.state.deleteInfo && alert("Can't delete course")} */}
+                  {this.state.deleteInfo && alert("Can't delete courier")}
 
                   <CourierDelete
                     {...this.props}

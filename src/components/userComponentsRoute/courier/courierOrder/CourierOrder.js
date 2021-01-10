@@ -100,7 +100,7 @@ class CourierOrder extends Component {
 
   getOrders() {
     let courierOrders = [...this.state.courierOrders];
-    let n = 3;
+    let n = 2;
     let increment = this.state.count;
     let decrement = this.state.count;
 
@@ -132,7 +132,11 @@ class CourierOrder extends Component {
             <CourierOrderHeader />
             {this.getOrders()}
           </table>
-          <hr className="hr" style={{ marginTop: "10px" }} />
+          <div className="col-2 offset-5">
+            <div className="col-8 offset-2">
+              <hr className="hr" style={{ marginTop: "10px" }} />
+            </div>
+          </div>
           <div className="d-flex flex-column">
             <div className=" row justify-content-center">
               <h5 className="mb-0 ">

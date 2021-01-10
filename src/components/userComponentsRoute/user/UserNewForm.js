@@ -1,36 +1,26 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import UserDelete from "./UserDelete";
 
-class UserEditForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+class UserNewForm extends Component {
   render() {
     const {
       handleSubmit,
       handleChangeBase,
       handleChangeConfirmPassword,
+      confirmPasswordFirstLength,
+      confirmPasswordFirst,
       handleChangeConfirmPassword2,
-      name,
-      surname,
-      confirmPassword,
-      confirmPassword2,
-      phoneNumber,
-      email,
-      accessToken,
-      id,
+      errorLength,
+      errorEmail,
     } = this.props;
 
     return (
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "130px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
-          User edit
+          Create new user
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="row justify-content-center ">
@@ -52,7 +42,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="name"
                     name="name"
-                    value={name}
                     onChange={handleChangeBase}
                     placeholder="Name"
                   />
@@ -71,7 +60,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="surname"
                     name="surname"
-                    value={surname}
                     onChange={handleChangeBase}
                     placeholder="Surname"
                   />
@@ -90,16 +78,13 @@ class UserEditForm extends Component {
                     type="password"
                     id="password"
                     name="first"
-                    value={confirmPassword}
                     onChange={handleChangeConfirmPassword}
                     placeholder="Password"
                   />
-                  {this.props.error.confirmPasswordFirst.length === 0 ? (
+                  {confirmPasswordFirstLength === 0 ? (
                     ""
                   ) : (
-                    <span className="red">
-                      {this.props.error.confirmPasswordFirst[0]}
-                    </span>
+                    <span style={{ color: "red" }}>{confirmPasswordFirst}</span>
                   )}
                 </div>
               </div>
@@ -108,7 +93,7 @@ class UserEditForm extends Component {
                   htmlFor="password"
                   className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  Confirm Password
+                  Confirm Password:
                 </label>
 
                 <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
@@ -117,7 +102,6 @@ class UserEditForm extends Component {
                     type="password"
                     id="password"
                     name="second"
-                    value={confirmPassword2}
                     onChange={handleChangeConfirmPassword2}
                     placeholder="Confirm Password"
                   />
@@ -128,7 +112,7 @@ class UserEditForm extends Component {
                   htmlFor="phoneNumber"
                   className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  Phone Number
+                  Phone Number:
                 </label>
                 <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
@@ -136,7 +120,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="phoneNumber"
                     name="phoneNumber"
-                    value={phoneNumber}
                     onChange={handleChangeBase}
                     placeholder="Phone Number"
                   />
@@ -147,7 +130,7 @@ class UserEditForm extends Component {
                   htmlFor="email"
                   className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
-                  E-mail
+                  E-mail:
                 </label>
                 <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
@@ -155,35 +138,42 @@ class UserEditForm extends Component {
                     type="email"
                     id="email"
                     name="email"
-                    value={email}
                     onChange={handleChangeBase}
                     placeholder=" E-mail"
                   />
-                  {this.props.error.email.length === 0 ? (
+                  {errorLength === 0 ? (
                     ""
                   ) : (
-                    <span style={{ color: "red" }}>
-                      {this.props.error.email[0]}
-                    </span>
+                    <span style={{ color: "red" }}>{errorEmail}</span>
                   )}
                 </div>
               </div>
             </div>
           </div>
           <div className="text-center" style={{ marginTop: 20 }}>
-            <button
-              className="btn btn-warning  btn-circle btn-lg"
-              type="submit"
-            >
-              EDIT
+            <button className="btn btn-success btn-circle btn-lg" type="submit">
+              CREATE
             </button>
           </div>
-          <div className="d-flex flex-column d-flex justify-content-center">
-            <NavLink to="/user" style={{ textAlign: "center" }}>
+          <div className="d-flex flex-column">
+            <NavLink
+              to={{
+                pathname: "/user",
+                state: { userId: 0 },
+              }}
+              style={{ textAlign: "center" }}
+            >
               back to list
             </NavLink>
-
-            <UserDelete {...this.props} accessToken={accessToken} id={id} />
+            <NavLink
+              to={{
+                pathname: "/login",
+                state: { userId: 0 },
+              }}
+              style={{ textAlign: "center" }}
+            >
+              logout
+            </NavLink>
           </div>
         </form>
       </>
@@ -191,4 +181,4 @@ class UserEditForm extends Component {
   }
 }
 
-export default UserEditForm;
+export default UserNewForm;

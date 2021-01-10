@@ -1,36 +1,26 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import UserDelete from "./UserDelete";
 
-class UserEditForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+class CourierNewForm extends Component {
   render() {
     const {
       handleSubmit,
       handleChangeBase,
       handleChangeConfirmPassword,
       handleChangeConfirmPassword2,
-      name,
-      surname,
-      confirmPassword,
-      confirmPassword2,
-      phoneNumber,
-      email,
-      accessToken,
-      id,
+      handleChangeDistrict,
+      allDistrict,
+      confirmPasswordFirstLength,
+      confirmPasswordFirst,
+      courierDistrict,
     } = this.props;
-
     return (
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "130px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
-          User edit
+          Create new courier
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="row justify-content-center ">
@@ -52,7 +42,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="name"
                     name="name"
-                    value={name}
                     onChange={handleChangeBase}
                     placeholder="Name"
                   />
@@ -71,7 +60,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="surname"
                     name="surname"
-                    value={surname}
                     onChange={handleChangeBase}
                     placeholder="Surname"
                   />
@@ -90,16 +78,13 @@ class UserEditForm extends Component {
                     type="password"
                     id="password"
                     name="first"
-                    value={confirmPassword}
                     onChange={handleChangeConfirmPassword}
                     placeholder="Password"
                   />
-                  {this.props.error.confirmPasswordFirst.length === 0 ? (
+                  {confirmPasswordFirstLength === 0 ? (
                     ""
                   ) : (
-                    <span className="red">
-                      {this.props.error.confirmPasswordFirst[0]}
-                    </span>
+                    <span style={{ color: "red" }}>{confirmPasswordFirst}</span>
                   )}
                 </div>
               </div>
@@ -117,7 +102,6 @@ class UserEditForm extends Component {
                     type="password"
                     id="password"
                     name="second"
-                    value={confirmPassword2}
                     onChange={handleChangeConfirmPassword2}
                     placeholder="Confirm Password"
                   />
@@ -136,7 +120,6 @@ class UserEditForm extends Component {
                     type="text"
                     id="phoneNumber"
                     name="phoneNumber"
-                    value={phoneNumber}
                     onChange={handleChangeBase}
                     placeholder="Phone Number"
                   />
@@ -155,40 +138,54 @@ class UserEditForm extends Component {
                     type="email"
                     id="email"
                     name="email"
-                    value={email}
                     onChange={handleChangeBase}
                     placeholder=" E-mail"
                   />
-                  {this.props.error.email.length === 0 ? (
-                    ""
-                  ) : (
-                    <span style={{ color: "red" }}>
-                      {this.props.error.email[0]}
-                    </span>
-                  )}
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="district"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                >
+                  District:
+                </label>
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                  <select
+                    className="form-control"
+                    name="district"
+                    value={courierDistrict}
+                    onChange={handleChangeDistrict}
+                  >
+                    {allDistrict.map((district) => (
+                      <option key={district.id} value={district.id}>
+                        {district.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
           </div>
           <div className="text-center" style={{ marginTop: 20 }}>
             <button
-              className="btn btn-warning  btn-circle btn-lg"
+              className="btn btn-success  btn-circle btn-lg"
               type="submit"
             >
-              EDIT
+              CREATE
             </button>
           </div>
-          <div className="d-flex flex-column d-flex justify-content-center">
-            <NavLink to="/user" style={{ textAlign: "center" }}>
+          <div className="d-flex flex-column">
+            <NavLink to="/courier" style={{ textAlign: "center" }}>
               back to list
             </NavLink>
-
-            <UserDelete {...this.props} accessToken={accessToken} id={id} />
+            <NavLink to="/login" style={{ textAlign: "center" }}>
+              logout
+            </NavLink>
           </div>
         </form>
       </>
     );
   }
 }
-
-export default UserEditForm;
+export default CourierNewForm;

@@ -1,36 +1,32 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import UserDelete from "./UserDelete";
+import CourierDelete from "./CourierDelete";
 
-class UserEditForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+class CourierEditForm extends Component {
   render() {
     const {
       handleSubmit,
-      handleChangeBase,
-      handleChangeConfirmPassword,
-      handleChangeConfirmPassword2,
       name,
+      handleChangeBase,
       surname,
-      confirmPassword,
-      confirmPassword2,
+      confirmPasswordFirstValue,
+      handleChangeConfirmPassword,
+      confirmPasswordFirstLength,
+      confirmPasswordFirst,
+      confirmPasswordSecondValue,
+      handleChangeConfirmPassword2,
       phoneNumber,
       email,
       accessToken,
       id,
     } = this.props;
-
     return (
       <>
         <h1
           className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "130px" }}
+          style={{ fontSize: "40px", paddingTop: "100px" }}
         >
-          User edit
+          Courier edit
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="row justify-content-center ">
@@ -42,13 +38,13 @@ class UserEditForm extends Component {
               <div className="form-group row">
                 <label
                   htmlFor="name"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Name:
                 </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
-                    className="form-control"
+                    class="form-control"
                     type="text"
                     id="name"
                     name="name"
@@ -58,14 +54,14 @@ class UserEditForm extends Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
+              <div class="form-group row">
                 <label
                   htmlFor="surname"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Surname:
                 </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -77,60 +73,58 @@ class UserEditForm extends Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
+              <div class="form-group row">
                 <label
                   htmlFor="password"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Password:
                 </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
                     id="password"
                     name="first"
-                    value={confirmPassword}
+                    value={confirmPasswordFirstValue}
                     onChange={handleChangeConfirmPassword}
                     placeholder="Password"
                   />
-                  {this.props.error.confirmPasswordFirst.length === 0 ? (
+                  {confirmPasswordFirstLength === 0 ? (
                     ""
                   ) : (
-                    <span className="red">
-                      {this.props.error.confirmPasswordFirst[0]}
-                    </span>
+                    <span style={{ color: "red" }}>{confirmPasswordFirst}</span>
                   )}
                 </div>
               </div>
-              <div className="form-group row">
+              <div class="form-group row">
                 <label
                   htmlFor="password"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Confirm Password
                 </label>
 
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
                     id="password"
                     name="second"
-                    value={confirmPassword2}
+                    value={confirmPasswordSecondValue}
                     onChange={handleChangeConfirmPassword2}
                     placeholder="Confirm Password"
                   />
                 </div>
               </div>
-              <div className="form-group row">
+              <div class="form-group row">
                 <label
                   htmlFor="phoneNumber"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Phone Number
                 </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -142,14 +136,14 @@ class UserEditForm extends Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
+              <div class="form-group row">
                 <label
                   htmlFor="email"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   E-mail
                 </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="email"
@@ -159,13 +153,13 @@ class UserEditForm extends Component {
                     onChange={handleChangeBase}
                     placeholder=" E-mail"
                   />
-                  {this.props.error.email.length === 0 ? (
+                  {/* {this.props.error.email.length === 0 ? (
                     ""
                   ) : (
                     <span style={{ color: "red" }}>
                       {this.props.error.email[0]}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
@@ -178,12 +172,12 @@ class UserEditForm extends Component {
               EDIT
             </button>
           </div>
-          <div className="d-flex flex-column d-flex justify-content-center">
-            <NavLink to="/user" style={{ textAlign: "center" }}>
+          <div className="d-flex flex-column">
+            <NavLink to="/courier" style={{ textAlign: "center" }}>
               back to list
             </NavLink>
 
-            <UserDelete {...this.props} accessToken={accessToken} id={id} />
+            <CourierDelete {...this.props} accessToken={accessToken} id={id} />
           </div>
         </form>
       </>
@@ -191,4 +185,4 @@ class UserEditForm extends Component {
   }
 }
 
-export default UserEditForm;
+export default CourierEditForm;

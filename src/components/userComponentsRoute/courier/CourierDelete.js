@@ -40,7 +40,7 @@ class CourierDelete extends Component {
     return (
       <>
         <div className="text-center">
-          <p ref={(ref) => (this.fooRef = ref)} data-tip="tooltip"></p>
+          {/* <p ref={(ref) => (this.fooRef = ref)} data-tip="tooltip"></p>
           <button
             onClick={() => {
               ReactTooltip.show(this.fooRef);
@@ -49,7 +49,7 @@ class CourierDelete extends Component {
           >
             Click
           </button>
-          <ReactTooltip />
+          <ReactTooltip /> */}
 
           <button
             className="btn btn-danger  btn-circle btn-lg"

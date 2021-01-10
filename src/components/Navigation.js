@@ -67,7 +67,7 @@ class Navigation extends Component {
         >
           <NavLink className="navbar-brand" to="#">
             <div className="logo">
-              <img src={"images/logo.png"} style={{ width: 200 }} alt="" />
+              <img src={"images/logo.png"} style={{ width: 150 }} alt="" />
             </div>
           </NavLink>
           <button

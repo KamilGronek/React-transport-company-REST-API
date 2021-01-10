@@ -141,7 +141,7 @@ class User extends Component {
 
   getOrders = () => {
     let users = [...this.state.users];
-    let n = 8;
+    let n = 5;
     let increment = this.state.count;
     let decrement = this.state.count;
 
@@ -170,7 +170,11 @@ class User extends Component {
             <UserListHeader />
             {this.getOrders()}
           </table>
-          <hr className="hr" style={{ marginTop: "10px" }} />
+          <div className="col-2 offset-5">
+            <div className="col-8 offset-2">
+              <hr className="hr" style={{ marginTop: "10px" }} />
+            </div>
+          </div>
           {role === "ROLE_ADMIN" ? (
             <div className="d-flex flex-column">
               <div className=" row justify-content-center">

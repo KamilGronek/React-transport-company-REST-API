@@ -60,7 +60,8 @@ class UserOrderListShow extends Component {
   }
 
   render() {
-    const { id, number, description, comments } = this.state.userOrder;
+    const { id, number, description, comments, status } = this.state.userOrder;
+    const { weight, width, height, length } = this.state.userOrder.package;
 
     return (
       <>
@@ -79,23 +80,23 @@ class UserOrderListShow extends Component {
                 <td>{this.state.userOrder.headquarters.name}</td>
                 <tr>
                   <td> weigth:</td>
-                  <td> {this.state.userOrder.package.weight}</td>
+                  <td> {weight}</td>
                 </tr>
                 <tr>
                   <td> width:</td>
-                  <td> {this.state.userOrder.package.width}</td>
+                  <td> {width}</td>
                 </tr>
                 <tr>
                   <td> height:</td>
-                  <td> {this.state.userOrder.package.height}</td>
+                  <td> {height}</td>
                 </tr>
                 <tr>
                   <td> length:</td>
-                  <td> {this.state.userOrder.package.length}</td>
+                  <td> {length}</td>
                 </tr>
                 <td>{this.state.userOrder.senderDetails.name}</td>
                 <td>{this.state.userOrder.recipientDetails.name}</td>
-                <td>{this.state.userOrder.status}</td>
+                <td>{status}</td>
                 <td>{this.state.userOrder.courier.user.name}</td>
 
                 <td className="d-flex flex-column align-items-center">

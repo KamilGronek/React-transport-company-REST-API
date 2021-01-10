@@ -71,8 +71,7 @@ class LoginForm extends Component {
       <>
         <div className="container">
           <form
-            // style={{ borderRadius: "10px" }}
-            className="m-5 border bg-light mx-auto col-xl-4 col-lg-4 col-sm-6  col-10 offset-xl-4 offset-lg-4 offset-sm-3 offset-1"
+            className="m-2 border bg-light mx-auto col-xl-4 col-lg-4 col-sm-6  col-10 offset-xl-4 offset-lg-4 offset-sm-3 offset-1"
             onSubmit={this.handleSubmit}
           >
             <div className=" p-3 logo d-flex justify-content-center">
@@ -160,11 +159,11 @@ class LoginForm extends Component {
             </tbody>
           </table>
           <footer
-            className="  row text-center align-items-center fixed-bottom bg-light"
+            className="  row text-center align-items-center fixed-bottom bg-dark"
             style={{ height: "40px" }}
           >
             <div className="col-12">
-              <b>&copy; KamilGronek2020</b>
+              <b>&copy; TransportCompany - KamilGronek2020</b>
             </div>
           </footer>
         </div>

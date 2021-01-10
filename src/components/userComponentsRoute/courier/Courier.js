@@ -114,7 +114,11 @@ class Courier extends Component {
             <CourierListHeader />
             {this.getOrders()}
           </table>
-          <hr className="hr" style={{ marginTop: "10px" }} />
+          <div className="col-2 offset-5">
+            <div className="col-8 offset-2">
+              <hr className="hr" style={{ marginTop: "10px" }} />
+            </div>
+          </div>
           <div className="d-flex flex-column">
             <div className=" row justify-content-center">
               <h5 className="mb-0 ">

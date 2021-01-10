@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 // import { Redirect } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-
+import UserNewForm from "./UserNewForm";
 class UserNew extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       user: {
         name: "",
@@ -119,172 +120,185 @@ class UserNew extends Component {
 
   render() {
     return (
-      <>
-        <h1
-          className="display-4 d-flex justify-content-center"
-          style={{ fontSize: "40px", paddingTop: "100px" }}
-        >
-          Create new user
-        </h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row justify-content-center ">
-            <div
-              className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light "
-              style={{ borderRadius: "10px" }}
-            >
-              <br />
-              <div className="form-group row">
-                <label
-                  htmlFor="name"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  Name:
-                </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="name"
-                    name="name"
-                    onChange={this.handleChangeBase}
-                    placeholder="Name"
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="surname"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  Surname:
-                </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="surname"
-                    name="surname"
-                    onChange={this.handleChangeBase}
-                    placeholder="Surname"
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="password"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  Password:
-                </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="password"
-                    id="password"
-                    name="first"
-                    onChange={this.handleChangeConfirmPassword}
-                    placeholder="Password"
-                  />
-                  {this.state.error.confirmPasswordFirst.length === 0 ? (
-                    ""
-                  ) : (
-                    <span style={{ color: "red" }}>
-                      {this.state.error.confirmPasswordFirst[0]}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="password"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  Confirm Password:
-                </label>
+      <UserNewForm
+        handleSubmit={this.handleSubmit}
+        handleChangeBase={this.handleChangeBase}
+        handleChangeConfirmPassword={this.handleChangeConfirmPassword}
+        confirmPasswordFirstLength={
+          this.state.error.confirmPasswordFirst.length
+        }
+        confirmPasswordFirst={this.state.error.confirmPasswordFirst[0]}
+        handleChangeConfirmPassword2={this.handleChangeConfirmPassword2}
+        errorLength={this.state.error.email.length}
+        errorEmail={this.state.error.email[0]}
+      />
 
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="password"
-                    id="password"
-                    name="second"
-                    onChange={this.handleChangeConfirmPassword2}
-                    placeholder="Confirm Password"
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="phoneNumber"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  Phone Number:
-                </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    onChange={this.handleChangeBase}
-                    placeholder="Phone Number"
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="email"
-                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                >
-                  E-mail:
-                </label>
-                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                  <input
-                    className="form-control"
-                    type="email"
-                    id="email"
-                    name="email"
-                    onChange={this.handleChangeBase}
-                    placeholder=" E-mail"
-                  />
-                  {this.state.error.email.length === 0 ? (
-                    ""
-                  ) : (
-                    <span style={{ color: "red" }}>
-                      {this.state.error.email[0]}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center" style={{ marginTop: 20 }}>
-            <button className="btn btn-success btn-circle btn-lg" type="submit">
-              CREATE
-            </button>
-          </div>
-          <div className="d-flex flex-column">
-            <NavLink
-              to={{
-                pathname: "/user",
-                state: { userId: 0 },
-              }}
-              style={{ textAlign: "center" }}
-            >
-              back to list
-            </NavLink>
-            <NavLink
-              to={{
-                pathname: "/login",
-                state: { userId: 0 },
-              }}
-              style={{ textAlign: "center" }}
-            >
-              logout
-            </NavLink>
-          </div>
-        </form>
-      </>
+      // <>
+      //   <h1
+      //     className="display-4 d-flex justify-content-center"
+      //     style={{ fontSize: "40px", paddingTop: "100px" }}
+      //   >
+      //     Create new user
+      //   </h1>
+      //   <form onSubmit={this.handleSubmit}>
+      //     <div className="row justify-content-center ">
+      //       <div
+      //         className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light "
+      //         style={{ borderRadius: "10px" }}
+      //       >
+      //         <br />
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="name"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             Name:
+      //           </label>
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="text"
+      //               id="name"
+      //               name="name"
+      //               onChange={this.handleChangeBase}
+      //               placeholder="Name"
+      //             />
+      //           </div>
+      //         </div>
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="surname"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             Surname:
+      //           </label>
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="text"
+      //               id="surname"
+      //               name="surname"
+      //               onChange={this.handleChangeBase}
+      //               placeholder="Surname"
+      //             />
+      //           </div>
+      //         </div>
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="password"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             Password:
+      //           </label>
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="password"
+      //               id="password"
+      //               name="first"
+      //               onChange={this.handleChangeConfirmPassword}
+      //               placeholder="Password"
+      //             />
+      //             {this.state.error.confirmPasswordFirst.length === 0 ? (
+      //               ""
+      //             ) : (
+      //               <span style={{ color: "red" }}>
+      //                 {this.state.error.confirmPasswordFirst[0]}
+      //               </span>
+      //             )}
+      //           </div>
+      //         </div>
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="password"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             Confirm Password:
+      //           </label>
+
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="password"
+      //               id="password"
+      //               name="second"
+      //               onChange={this.handleChangeConfirmPassword2}
+      //               placeholder="Confirm Password"
+      //             />
+      //           </div>
+      //         </div>
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="phoneNumber"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             Phone Number:
+      //           </label>
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="text"
+      //               id="phoneNumber"
+      //               name="phoneNumber"
+      //               onChange={this.handleChangeBase}
+      //               placeholder="Phone Number"
+      //             />
+      //           </div>
+      //         </div>
+      //         <div className="form-group row">
+      //           <label
+      //             htmlFor="email"
+      //             className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+      //           >
+      //             E-mail:
+      //           </label>
+      //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+      //             <input
+      //               className="form-control"
+      //               type="email"
+      //               id="email"
+      //               name="email"
+      //               onChange={this.handleChangeBase}
+      //               placeholder=" E-mail"
+      //             />
+      //             {this.state.error.email.length === 0 ? (
+      //               ""
+      //             ) : (
+      //               <span style={{ color: "red" }}>
+      //                 {this.state.error.email[0]}
+      //               </span>
+      //             )}
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //     <div className="text-center" style={{ marginTop: 20 }}>
+      //       <button className="btn btn-success btn-circle btn-lg" type="submit">
+      //         CREATE
+      //       </button>
+      //     </div>
+      //     <div className="d-flex flex-column">
+      //       <NavLink
+      //         to={{
+      //           pathname: "/user",
+      //           state: { userId: 0 },
+      //         }}
+      //         style={{ textAlign: "center" }}
+      //       >
+      //         back to list
+      //       </NavLink>
+      //       <NavLink
+      //         to={{
+      //           pathname: "/login",
+      //           state: { userId: 0 },
+      //         }}
+      //         style={{ textAlign: "center" }}
+      //       >
+      //         logout
+      //       </NavLink>
+      //     </div>
+      //   </form>
+      // </>
     );
   }
 }
