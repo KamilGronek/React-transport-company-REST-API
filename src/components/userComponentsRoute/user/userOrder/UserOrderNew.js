@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import UserOrderNewForm from "./UserOrderNewForm";
 import { NavLink } from "react-router-dom";
 // import { Link } from "react-scroll";
-import UserOrderNewPiece from "./fieldsFormComponent/UserOrderNewPiece";
+import UserOrderNewPiece from "./UserOrderNewPiece";
 class UserOrderNew extends Component {
   constructor(props) {
     super(props);

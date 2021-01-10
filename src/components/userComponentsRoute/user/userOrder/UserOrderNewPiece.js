@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-
+import NumberField from "./fieldsFormComponent/NumberField";
 class UserOrderNewPiece extends Component {
   render() {
     const {
@@ -26,7 +26,8 @@ class UserOrderNewPiece extends Component {
             <br />
             <strong>Details:</strong>
 
-            <div className="form-group row">
+            <NumberField handleChangeBase={handleChangeBase} />
+            {/* <div className="form-group row">
               <label
                 htmlFor="name"
                 className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
@@ -43,7 +44,8 @@ class UserOrderNewPiece extends Component {
                   placeholder="Number"
                 />
               </div>
-            </div>
+            </div> */}
+
             <div className="form-group row">
               <label
                 htmlFor="name"
