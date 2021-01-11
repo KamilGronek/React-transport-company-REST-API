@@ -46,7 +46,7 @@ class UserOrderNew extends Component {
       allDistrict: [],
       changeArrow: true,
       hrLine: true,
-      active: this.props.location.active,
+      // active: this.props.location.active,
     };
   }
 

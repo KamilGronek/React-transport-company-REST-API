@@ -2,6 +2,32 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import NumberField from "./fieldsFormComponent/NumberField";
+import DescriptionField from "./fieldsFormComponent/DescriptionField";
+import HeadquartersField from "./fieldsFormComponent/HeadquartersField";
+import CommentsField from "./fieldsFormComponent/CommentsField";
+import WeightField from "./fieldsFormComponent/WeightField";
+import HeightField from "./fieldsFormComponent/HeightField";
+import LengthField from "./fieldsFormComponent/LengthField";
+import WidthField from "./fieldsFormComponent/WidthField";
+import AccordionField from "./fieldsFormComponent/AccordionField";
+import SenderNameField from "./fieldsFormComponent/SenderNameField";
+import SenderSurnameField from "./fieldsFormComponent/SenderSurnameField";
+import SenderCityField from "./fieldsFormComponent/SenderCityField";
+import SenderStreetField from "./fieldsFormComponent/SenderStreetField";
+import SenderHouseNrField from "./fieldsFormComponent/SenderHouseNrField";
+import SenderApartmentNrField from "./fieldsFormComponent/SenderApartmentNrField";
+import SenderPhoneNrField from "./fieldsFormComponent/SenderPhoneNrField";
+import SenderEmailField from "./fieldsFormComponent/SenderEmailField";
+import SenderDistrictField from "./fieldsFormComponent/SenderDistrictField";
+import RecipientNameField from "./fieldsFormComponent/RecipientNameField";
+import RecipientSurnameField from "./fieldsFormComponent/RecipientSurnameField";
+import RecipientCityField from "./fieldsFormComponent/RecipientCityField";
+import RecipientStreetField from "./fieldsFormComponent/RecipientStreetField";
+import RecipientHouseNrField from "./fieldsFormComponent/RecipientHouseNrField";
+import RecipientApartmentNrField from "./fieldsFormComponent/RecipientApartmentNrField";
+import RecipientPhoneNrField from "./fieldsFormComponent/RecipientPhoneNrField";
+import RecipientEmailField from "./fieldsFormComponent/RecipientEmailField";
+import RecipientDistrictField from "./fieldsFormComponent/RecipientDistrictField";
 class UserOrderNewPiece extends Component {
   render() {
     const {
@@ -25,161 +51,22 @@ class UserOrderNewPiece extends Component {
           <div className=" col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
             <br />
             <strong>Details:</strong>
-
             <NumberField handleChangeBase={handleChangeBase} />
-            {/* <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Number:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="text"
-                  id="number"
-                  name="number"
-                  onChange={handleChangeBase}
-                  placeholder="Number"
-                />
-              </div>
-            </div> */}
-
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Description:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="text"
-                  id="description"
-                  name="description"
-                  onChange={handleChangeBase}
-                  placeholder="Description"
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Headquarters:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <select
-                  className="form-control"
-                  name="headquarters"
-                  onChange={handleChangeHeadquarters}
-                >
-                  {allHeadquarters.map((headquarter) => (
-                    <option key={headquarter.id} value={headquarter.id}>
-                      {headquarter.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Comments:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="text"
-                  id="comments"
-                  name="comments"
-                  onChange={handleChangeBase}
-                  placeholder="Comments"
-                />
-              </div>
-            </div>
+            <DescriptionField handleChangeBase={handleChangeBase} />
+            <HeadquartersField
+              handleChangeHeadquarters={handleChangeHeadquarters}
+              allHeadquarters={allHeadquarters}
+            />
+            <CommentsField handleChangeBase={handleChangeBase} />
           </div>
 
           <div className="col-xl-3 col-lg-3 col-md-5 col-sm-6 col-8  m-2 border bg-light ">
             <br />
             <strong>Package:</strong>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Weight:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  onChange={handleChangePackage}
-                  placeholder="Weight"
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Height:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="number"
-                  id="height"
-                  name="height"
-                  onChange={handleChangePackage}
-                  placeholder="Height"
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Length:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="number"
-                  id="length"
-                  name="length"
-                  onChange={handleChangePackage}
-                  placeholder="Length"
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="name"
-                className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-              >
-                Width:
-              </label>
-              <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                <input
-                  className="form-control"
-                  type="number"
-                  id="width"
-                  name="width"
-                  onChange={handleChangePackage}
-                  placeholder="Width"
-                />
-              </div>
-            </div>
+            <WeightField handleChangePackage={handleChangePackage} />
+            <HeightField handleChangePackage={handleChangePackage} />
+            <LengthField handleChangePackage={handleChangePackage} />
+            <WidthField handleChangePackage={handleChangePackage} />
           </div>
         </div>
         {hrLine && (
@@ -191,45 +78,10 @@ class UserOrderNewPiece extends Component {
         )}
         <div id="accordion">
           <div>
-            <div
-              style={{ paddingBottom: "10px" }}
-              className=" row justify-content-center col-6 offset-3"
-              id="headingThree "
-            >
-              <h5 className="mb-0 ">
-                <Link
-                  to="continuedOrder"
-                  smooth={true}
-                  duration={1000}
-                  type="button"
-                  className="btn btn-link collapsed"
-                  data-toggle="collapse"
-                  data-target="#collapseThree"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                  onClick={handleSwitchArrow}
-                  style={{ fontSize: "11px" }}
-                >
-                  continued order
-                </Link>
-
-                <Link
-                  to="continuedOrder"
-                  smooth={true}
-                  duration={1000}
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#collapseThree"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                  className={"arrow " + (changeArrow ? "down" : "up")}
-                  onClick={handleSwitchArrow}
-                >
-                  {" "}
-                </Link>
-              </h5>
-            </div>
-
+            <AccordionField
+              handleSwitchArrow={handleSwitchArrow}
+              changeArrow={changeArrow}
+            />
             <div
               id="collapseThree"
               className="collapse"
@@ -553,27 +405,12 @@ class UserOrderNewPiece extends Component {
                       />
                     </div>
                   </div>
-                  <div className="form-group row">
-                    <label
-                      htmlFor="name"
-                      className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
-                    >
-                      District:
-                    </label>
-                    <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
-                      <select
-                        className="form-control"
-                        name="recipientDetailsDistrict"
-                        onChange={handleSelectRecipientDistrict}
-                      >
-                        {allDistrict.map((district) => (
-                          <option key={district.id} value={district.id}>
-                            {district.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
+                  <RecipientDistrictField
+                    handleSelectRecipientDistrict={
+                      handleSelectRecipientDistrict
+                    }
+                    allDistrict={allDistrict}
+                  />
                 </div>
               </div>
             </div>

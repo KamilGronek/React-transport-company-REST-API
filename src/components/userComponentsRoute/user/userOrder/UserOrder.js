@@ -11,6 +11,7 @@ class UserOrder extends Component {
     this.state = {
       userOrders: [],
       active: false,
+      editColor: false,
       count: 1,
       showLessButton: false,
     };
@@ -45,6 +46,18 @@ class UserOrder extends Component {
       return "";
     } else {
       if (this.props.history.location.active) {
+        return this.props.history.location.state.userOrderId;
+      } else {
+        return "";
+      }
+    }
+  };
+
+  setEditColorId = () => {
+    if (this.state.editColor) {
+      return "";
+    } else {
+      if (this.props.history.location.editColor) {
         return this.props.history.location.state.userOrderId;
       } else {
         return "";
@@ -98,6 +111,7 @@ class UserOrder extends Component {
         key={userOrder.id}
         userOrder={userOrder}
         userOrderId={this.setActiveUserId()}
+        editUserOrderId={this.setEditColorId()}
       />
     ));
   }

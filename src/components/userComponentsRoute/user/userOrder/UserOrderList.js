@@ -26,6 +26,24 @@ class UserList extends Component {
     }
   }
 
+  setColorForEdit() {
+    if (this.props.userOrder.id === this.props.userOrderId) {
+      return <span className="green"> {this.props.userOrder.id} </span>;
+    }
+
+    if (this.props.userOrder.id === this.props.editUserOrderId) {
+      return <span className="yellow"> {this.props.userOrder.id} </span>;
+    } else {
+      return this.props.userOrder.id;
+    }
+  }
+
+  // if (this.props.userOrder.id === this.props.editUserOrderId) {
+  //   return(
+  //     <span className="yellow"> {this.props.userOrder.id} </span>
+  //     )
+  // }
+
   render() {
     const { id, number, description, comments } = this.props.userOrder;
     const { userOrderId } = this.props;
@@ -34,7 +52,9 @@ class UserList extends Component {
         <tbody>
           <tr>
             <td>
-              {id === userOrderId ? <span className="green"> {id} </span> : id}
+              {/* {id === userOrderId ? <span className="green"> {id} </span> : id}
+               */}
+              {this.setColorForEdit()}
             </td>
             <td>
               {id === userOrderId ? (
@@ -123,6 +143,7 @@ class UserList extends Component {
             </td>
             <td>{this.setColorForStatus()}</td>
             <td>{this.setColorForCourier()}</td>
+
             <td>
               <NavLink
                 to={{

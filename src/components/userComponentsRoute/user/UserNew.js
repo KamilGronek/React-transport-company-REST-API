@@ -157,11 +157,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
+      //               // type="text"
+      //               // id="name"
+      //               // name="name"
+      //               // onChange={this.handleChangeBase}
+      //               // placeholder="Name"
       //               type="text"
-      //               id="name"
-      //               name="name"
-      //               onChange={this.handleChangeBase}
-      //               placeholder="Name"
+      //               onKeyUp={this.onKeyUp.bind(this, "firstName")}
+      //               ref={(input) => {
+      //                 this.firstName = input;
+      //               }}
       //             />
       //           </div>
       //         </div>
@@ -175,11 +180,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
+      //               // type="text"
+      //               // id="surname"
+      //               // name="surname"
+      //               // onChange={this.handleChangeBase}
+      //               // placeholder="Surname"
       //               type="text"
-      //               id="surname"
-      //               name="surname"
-      //               onChange={this.handleChangeBase}
-      //               placeholder="Surname"
+      //               onKeyUp={this.onKeyUp.bind(this, "lastName")}
+      //               ref={(input) => {
+      //                 this.lastName = input;
+      //               }}
       //             />
       //           </div>
       //         </div>
@@ -193,11 +203,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
+      //               // type="password"
+      //               // id="password"
+      //               // name="first"
+      //               // onChange={this.handleChangeConfirmPassword}
+      //               // placeholder="Password"
       //               type="password"
-      //               id="password"
-      //               name="first"
-      //               onChange={this.handleChangeConfirmPassword}
-      //               placeholder="Password"
+      //               onKeyUp={this.onKeyUp.bind(this, "password")}
+      //               ref={(input) => {
+      //                 this.password = input;
+      //               }}
       //             />
       //             {this.state.error.confirmPasswordFirst.length === 0 ? (
       //               ""
@@ -219,11 +234,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
+      //               // type="password"
+      //               // id="password"
+      //               // name="second"
+      //               // onChange={this.handleChangeConfirmPassword2}
+      //               // placeholder="Confirm Password"
       //               type="password"
-      //               id="password"
-      //               name="second"
-      //               onChange={this.handleChangeConfirmPassword2}
-      //               placeholder="Confirm Password"
+      //               onKeyUp={this.onKeyUp.bind(this, "confirmPassword")}
+      //               ref={(input) => {
+      //                 this.confirmPassword = input;
+      //               }}
       //             />
       //           </div>
       //         </div>
@@ -237,11 +257,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
+      //               // type="text"
+      //               // id="phoneNumber"
+      //               // name="phoneNumber"
+      //               // onChange={this.handleChangeBase}
+      //               // placeholder="Phone Number"
       //               type="text"
-      //               id="phoneNumber"
-      //               name="phoneNumber"
-      //               onChange={this.handleChangeBase}
-      //               placeholder="Phone Number"
+      //               onKeyUp={this.onKeyUp.bind(this, "phoneNumber")}
+      //               ref={(input) => {
+      //                 this.phoneNumber = input;
+      //               }}
       //             />
       //           </div>
       //         </div>
@@ -255,11 +280,16 @@ class UserNew extends Component {
       //           <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
       //             <input
       //               className="form-control"
-      //               type="email"
-      //               id="email"
-      //               name="email"
-      //               onChange={this.handleChangeBase}
-      //               placeholder=" E-mail"
+      //               // type="email"
+      //               // id="email"
+      //               // name="email"
+      //               // onChange={this.handleChangeBase}
+      //               // placeholder=" E-mail"
+      //               type="text"
+      //               onKeyUp={this.onKeyUp.bind(this, "email")}
+      //               ref={(input) => {
+      //                 this.email = input;
+      //               }}
       //             />
       //             {this.state.error.email.length === 0 ? (
       //               ""

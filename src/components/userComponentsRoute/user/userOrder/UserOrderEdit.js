@@ -45,6 +45,7 @@ class UserOrderEdit extends Component {
       allDistrict: [],
       changeArrow: true,
       hrLine: true,
+      active: this.props.location.active,
     };
   }
 
@@ -257,6 +258,15 @@ class UserOrderEdit extends Component {
         }
         throw new Error("Something went wrong...");
       })
+      .then((response) => response.json())
+      .then((userOrder) => {
+        this.props.history.push({
+          pathname: "/user-order",
+          state: { userOrderId: userOrder.id },
+          editColor: true,
+        });
+      })
+
       .catch((error) => console.log(error));
   };
 
