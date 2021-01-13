@@ -116,6 +116,7 @@ class UserOrderNew extends Component {
       userOrder,
     });
   };
+
   handleSelectRecipientDistrict = (e) => {
     let userOrder = this.state.userOrder;
     userOrder.recipientDetails.district = e.target.value;

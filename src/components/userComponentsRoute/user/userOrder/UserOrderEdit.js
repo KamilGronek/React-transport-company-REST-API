@@ -145,6 +145,8 @@ class UserOrderEdit extends Component {
       .catch((error) => console.log(error));
   };
 
+  // wywołanie ModulAPI.getAllDistrict()
+
   fetchDistricts = () => {
     fetch("http://localhost:8000/api/district/", {
       method: "get",

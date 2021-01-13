@@ -4,11 +4,11 @@ import UserList from "./UserList";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { animateScroll } from "react-scroll";
+import ModulAPI from "../../../../src/api/ModulAPI";
 
 class User extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       users: [],
       user: {},
@@ -20,30 +20,12 @@ class User extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/user/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((users) => {
-        users.reverse();
-
-        console.log(users);
-        this.setState({
-          users: users,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.getAllUsers({ ...this.props }).then((users) => {
+      console.log("coś poszło");
+      this.setState({
+        users: users,
+      });
+    });
     this.getUserRole();
     this.scrollToBottom();
   }

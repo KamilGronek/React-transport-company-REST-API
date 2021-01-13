@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-import NumberField from "./fieldsFormComponent/NumberField";
-import DescriptionField from "./fieldsFormComponent/DescriptionField";
-import HeadquartersField from "./fieldsFormComponent/HeadquartersField";
+import InputEditForm from "./fieldsFormComponent/InputEditForm";
+
 class UserOrderEditForm extends Component {
   render() {
     const {
@@ -47,19 +46,66 @@ class UserOrderEditForm extends Component {
               <br />
               <strong>Details:</strong>
 
-              <NumberField
-                numberValue={number}
-                handleChangeBase={handleChangeBase}
-              />
-              <DescriptionField
-                descriptionValue={description}
-                handleChangeBase={handleChangeBase}
-              />
-              <HeadquartersField
-                handleChangeHeadquarters={handleChangeHeadquarters}
-                headquartersValue={headquarters}
-                allHeadquarters={allHeadquarters}
-              />
+              <div className="form-group row">
+                <label
+                  htmlFor="name"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                >
+                  Number:
+                </label>
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="number"
+                    name="number"
+                    value={number}
+                    onChange={handleChangeBase}
+                    placeholder="Number"
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="name"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                >
+                  Description:
+                </label>
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="description"
+                    name="description"
+                    value={description}
+                    onChange={handleChangeBase}
+                    placeholder="Description"
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="name"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                >
+                  Headquarters:
+                </label>
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
+                  <select
+                    className="form-control"
+                    name="headquarters"
+                    value={headquarters}
+                    onChange={handleChangeHeadquarters}
+                  >
+                    {allHeadquarters.map((headquarter) => (
+                      <option key={headquarter.id} value={headquarter.id}>
+                        {headquarter.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               <div className="form-group row">
                 <label
