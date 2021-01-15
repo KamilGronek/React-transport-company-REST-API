@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ModulAPI from "../../../../api/ModulAPI";
 import UserOrderEditForm from "./UserOrderEditForm";
 // import { NavLink } from "react-router-dom";
 // import { Link } from "react-scroll";
@@ -123,45 +124,17 @@ class UserOrderEdit extends Component {
   };
 
   fetchHeadquarters = () => {
-    fetch("http://localhost:8000/api/headquarters/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((allHeadquarters) => {
+    ModulAPI.get(this.props.accessToken, "headquarters", "get").then(
+      (allHeadquarters) => {
         this.setState({
           allHeadquarters: allHeadquarters,
         });
-      })
-      .catch((error) => console.log(error));
+      }
+    );
   };
 
-  // wywołanie ModulAPI.getAllDistrict()
-
   fetchDistricts = () => {
-    fetch("http://localhost:8000/api/district/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
+    ModulAPI.get(this.props.accessToken, "district", "get")
       .then((allDistrict) => {
         this.setState({
           allDistrict: allDistrict,
@@ -171,6 +144,7 @@ class UserOrderEdit extends Component {
   };
 
   getUserOrderEditValues = () => {
+    // problem z   headquarters: response.headquarters.id,
     fetch("http://localhost:8000/api/user-order/" + this.props.location.id, {
       //read
       method: "get",
@@ -236,30 +210,14 @@ class UserOrderEdit extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.userOrder);
-    fetch(
-      "http://localhost:8000/api/user-order/" +
-        this.props.location.id +
-        "/edit/user",
-      {
-        method: "put",
-        body: json,
-        headers: new Headers({
-          Authorization: "Bearer " + this.props.accessToken,
-          "Content-Type": "application/json",
-        }),
-      }
-    )
-      .then((response) => {
-        if (response.status === 200) {
-          this.props.history.push("/user-order");
-          return response;
-        }
-        if (response.status === 400) {
-          return response;
-        }
-        throw new Error("Something went wrong...");
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.putIdEdit(
+      this.props.accessToken,
+      "user-order",
+      "put",
+      this.props.location.id,
+      json,
+      this.props.history
+    );
   };
 
   render() {

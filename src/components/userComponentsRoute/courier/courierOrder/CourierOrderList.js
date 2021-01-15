@@ -63,34 +63,3 @@ class CourierOrderList extends Component {
 }
 
 export default CourierOrderList;
-
-{
-  /* <NavLink
-                to={{
-                  pathname: "/user/user-order/status",
-                  id: id,
-                }}
-              >
-                manage status
-              </NavLink> */
-}
-
-{
-  /* <button className="btn btn-primary" onClick={this.showAndOpen}>
-                {" "}
-                manage status
-              </button> */
-}
-
-{
-  /* <div>
-            {this.state.openButton && (
-              <select name="" id="">
-                <option value="">All</option>
-                <option value="">Created</option>
-                <option value="">Created</option>
-                <option value="">Created</option>
-              </select>
-            )}
-          </div> */
-}

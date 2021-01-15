@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ModulAPI from "../../../api/ModulAPI";
 import CourierEditForm from "./CourierEditForm";
 
 class CourierEdit extends Component {
@@ -29,44 +30,31 @@ class CourierEdit extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.location);
-    fetch("http://localhost:8000/api/courier/" + this.props.location.id, {
-      //read
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((res) => {
-        this.setState({
-          // bo to musimy od razu odczytać w inputach
-          courier: {
-            // id: res.id,
-            user: {
-              // id: res.user.id,
-              name: res.user.name,
-              surname: res.user.surname,
-              confirmPassword: {
-                first: res.user.password,
-                second: res.user.password,
-              },
-              phoneNumber: res.user.phone_number,
-              email: res.user.email_canonical,
+    ModulAPI.getId(
+      this.props.accessToken,
+      "courier",
+      "get",
+      this.props.location.id
+    ).then((res) => {
+      this.setState({
+        // bo to musimy od razu odczytać w inputach
+        courier: {
+          // id: res.id,
+          user: {
+            // id: res.user.id,
+            name: res.user.name,
+            surname: res.user.surname,
+            confirmPassword: {
+              first: res.user.password,
+              second: res.user.password,
             },
-            district: res.district.id,
+            phoneNumber: res.user.phone_number,
+            email: res.user.email_canonical,
           },
-        });
-      })
-      .catch((error) => console.log(error));
+          district: res.district.id,
+        },
+      });
+    });
   }
 
   handleChangeBase = (e) => {

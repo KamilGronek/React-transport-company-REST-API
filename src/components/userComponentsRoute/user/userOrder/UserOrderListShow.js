@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import UserOrderListHeader from "./UserOrderListHeader";
 import { NavLink } from "react-router-dom";
 import UserOrderDelete from "./UserOrderDelete";
+import ModulAPI from "../../../../api/ModulAPI";
 
-//
 class UserOrderListShow extends Component {
   constructor(props) {
     super(props);
@@ -22,41 +22,29 @@ class UserOrderListShow extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/user-order/" + this.props.location.id, {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((userOrderRes) => {
-        // console.log(userOrderRes);
-        this.setState({
-          userOrder: {
-            id: userOrderRes.id,
-            number: userOrderRes.number,
-            description: userOrderRes.description,
-            comments: userOrderRes.comments,
-            headquarters: userOrderRes.headquarters,
-            package: userOrderRes.package,
-            senderDetails: userOrderRes.sender_details,
-            recipientDetails: userOrderRes.recipient_details,
-            status: userOrderRes.status,
-            courier: {
-              user: userOrderRes.courier.user,
-            },
+    ModulAPI.getId(
+      this.props.accessToken,
+      "user-order",
+      "get",
+      this.props.location.id
+    ).then((userOrderRes) => {
+      this.setState({
+        userOrder: {
+          id: userOrderRes.id,
+          number: userOrderRes.number,
+          description: userOrderRes.description,
+          comments: userOrderRes.comments,
+          headquarters: userOrderRes.headquarters,
+          package: userOrderRes.package,
+          senderDetails: userOrderRes.sender_details,
+          recipientDetails: userOrderRes.recipient_details,
+          status: userOrderRes.status,
+          courier: {
+            user: userOrderRes.courier.user,
           },
-        });
-      })
-      .catch((error) => console.log(error));
+        },
+      });
+    });
   }
 
   render() {

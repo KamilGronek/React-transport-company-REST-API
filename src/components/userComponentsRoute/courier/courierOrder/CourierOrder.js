@@ -3,6 +3,7 @@ import CourierOrderHeader from "./CourierOrderHeader";
 import CourierOrderList from "./CourierOrderList";
 import { Link } from "react-scroll";
 import { animateScroll } from "react-scroll";
+import ModulAPI from "../../../../api/ModulAPI";
 
 class CourierOrder extends Component {
   constructor(props) {
@@ -15,53 +16,73 @@ class CourierOrder extends Component {
     };
   }
 
+  // getUserRole() {
+  //   fetch("http://localhost:8000/api/current-user/", {
+  //     method: "get",
+  //     headers: new Headers({
+  //       Authorization: "Bearer " + this.props.accessToken,
+  //       "Content-Type": "application/json",
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         console.log(response);
+  //         return response;
+  //       }
+  //       throw Error(response.status);
+  //     })
+  //     .then((response) => response.json())
+  //     .then((user) => {
+  //       this.setState({
+  //         user: user,
+  //       });
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+
   getUserRole() {
-    fetch("http://localhost:8000/api/current-user/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((user) => {
-        this.setState({
-          user: user,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.get(this.props.accessToken, "current-user", "get").then((user) => {
+      this.setState({
+        user: user,
+      });
+    });
   }
 
-  componentDidMount() {
-    fetch("http://localhost:8000/api/courier-order/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((courierOrders) => {
-        courierOrders.reverse();
+  // componentDidMount() {
+  //   fetch("http://localhost:8000/api/courier-order/", {
+  //     method: "get",
+  //     headers: new Headers({
+  //       Authorization: "Bearer " + this.props.accessToken,
+  //       "Content-Type": "application/json",
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response;
+  //       }
+  //       throw Error(response.status);
+  //     })
+  //     .then((response) => response.json())
+  //     .then((courierOrders) => {
+  //       courierOrders.reverse();
 
+  //       this.setState({
+  //         courierOrders: courierOrders,
+  //       });
+  //     })
+  //     .catch((error) => console.log(error));
+  //   this.getUserRole();
+  //   this.scrollToBottom();
+  // }
+
+  componentDidMount() {
+    ModulAPI.get(this.props.accessToken, "courier-order", "get").then(
+      (courierOrders) => {
         this.setState({
           courierOrders: courierOrders,
         });
-      })
-      .catch((error) => console.log(error));
+      }
+    );
     this.getUserRole();
     this.scrollToBottom();
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CourierListHeader from "../../CourierListHeader";
 import { NavLink } from "react-router-dom";
 import CourierDelete from "./CourierDelete";
+import ModulAPI from "../../../../src/api/ModulAPI";
 class UserListShow extends Component {
   constructor(props) {
     super(props);
@@ -15,27 +16,17 @@ class UserListShow extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courier/" + this.props.location.id, {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((courier) => {
-        this.setState({
-          courier: courier,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.getId(
+      this.props.accessToken,
+      "courier",
+      "get",
+      this.props.location.id
+    ).then((courier) => {
+      console.log(courier);
+      this.setState({
+        courier: courier,
+      });
+    });
   }
 
   alertDelete = () => {

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
-// import { NavLink } from "react-router-dom";
-// import UserDelete from "./UserDelete";
+import ModulAPI from "../../../api/ModulAPI";
 import UserEditForm from "./UserEditForm";
 
 class UserEdit extends Component {
@@ -27,22 +25,12 @@ class UserEdit extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/user/" + this.props.location.id, {
-      //read
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
+    ModulAPI.getId(
+      this.props.accessToken,
+      "user",
+      "get",
+      this.props.location.id
+    )
       .then((res) => {
         this.setState({
           user: {
@@ -75,11 +63,7 @@ class UserEdit extends Component {
     const value = e.target.value;
     let user = this.state.user;
     user.confirmPassword.first = value;
-    // user["confirmPassword"]["second"] = this.state.user.confirmPassword.second;
     this.setState({
-      // confirmPassword: {
-      //   first: value,
-      //   second: this.state.user.confirmPassword.second,
       user,
     });
   };
@@ -87,45 +71,56 @@ class UserEdit extends Component {
   handleChangeConfirmPassword2 = (e) => {
     const value = e.target.value;
     let user = this.state.user;
-    // user["confirmPassword"]["first"] = this.state.user.confirmPassword.first;
-    user["confirmPassword"]["second"] = value;
+    user.confirmPassword.second = value;
     this.setState({
       user,
-      // confirmPassword: {
-      //   first: this.state.user.confirmPassword.first,
-      //   second: value,
-      // },
     });
   };
+
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   let json = JSON.stringify(this.state.user);
+  //   fetch(
+  //     "http://localhost:8000/api/user/" + this.props.location.id + "/edit",
+  //     {
+  //       method: "put",
+  //       body: json,
+  //       headers: new Headers({
+  //         Authorization: "Bearer " + this.props.accessToken,
+  //         "Content-Type": "application/json",
+  //       }),
+  //     }
+  //   )
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         this.props.history.push("/user");
+  //         return response;
+  //       }
+  //       if (response.status === 400) {
+  //         return response.json().then((res) => {
+  //           this.handleErrorForm(res);
+  //         });
+  //       }
+  //       throw new Error("Something went wrong...");
+  //     })
+
+  //     .catch((error) => console.log(error));
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.user);
-    fetch(
-      "http://localhost:8000/api/user/" + this.props.location.id + "/edit",
-      {
-        method: "put",
-        body: json,
-        headers: new Headers({
-          Authorization: "Bearer " + this.props.accessToken,
-          "Content-Type": "application/json",
-        }),
-      }
-    )
-      .then((response) => {
-        if (response.status === 200) {
-          this.props.history.push("/user");
-          return response;
-        }
-        if (response.status === 400) {
-          return response.json().then((res) => {
-            this.handleErrorForm(res);
-          });
-        }
-        throw new Error("Something went wrong...");
-      })
-
-      .catch((error) => console.log(error));
+    ModulAPI.putId(
+      this.props.accessToken,
+      "user",
+      "put",
+      this.props.location.id,
+      json,
+      this.props.history
+    );
+    // .then((res) => {
+    //   this.handleErrorForm(res);
+    // });
   };
 
   handleErrorForm = (res) => {

@@ -12,7 +12,7 @@ class CourierNewForm extends Component {
       allDistrict,
       confirmPasswordFirstLength,
       confirmPasswordFirst,
-      courierDistrict,
+      // courierDistrict,
     } = this.props;
     return (
       <>
@@ -154,7 +154,7 @@ class CourierNewForm extends Component {
                   <select
                     className="form-control"
                     name="district"
-                    value={courierDistrict}
+                    // value={courierDistrict}
                     onChange={handleChangeDistrict}
                   >
                     {allDistrict.map((district) => (

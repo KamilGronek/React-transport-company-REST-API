@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserListHeader from "../../UserListHeader";
 import { NavLink } from "react-router-dom";
 import UserDelete from "./UserDelete";
+import ModulAPI from "../../../../src/api/ModulAPI";
 class UserListShow extends Component {
   constructor(props) {
     super(props);
@@ -9,30 +10,18 @@ class UserListShow extends Component {
       user: {},
     };
   }
-
   componentDidMount() {
-    fetch("http://localhost:8000/api/user/" + this.props.location.id, {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((user) => {
-        console.log(user);
-        this.setState({
-          user: user,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.getId(
+      this.props.accessToken,
+      "user",
+      "get",
+      this.props.location.id
+    ).then((user) => {
+      console.log(user);
+      this.setState({
+        user: user,
+      });
+    });
   }
 
   render() {

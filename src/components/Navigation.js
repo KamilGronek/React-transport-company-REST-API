@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { NavLink } from "react-router-dom";
+import ModulAPI from "../../src/api/ModulAPI";
 
 class Navigation extends Component {
   constructor(props) {
@@ -14,27 +15,11 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/current-user/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((user) => {
-        this.setState({
-          user: user,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.get(this.props.accessToken, "current-user", "get").then((user) => {
+      this.setState({
+        user: user,
+      });
+    });
   }
 
   handleLogout = () => {

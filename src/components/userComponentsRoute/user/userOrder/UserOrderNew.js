@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import UserOrderNewForm from "./UserOrderNewForm";
-import { NavLink } from "react-router-dom";
+// import UserOrderNewForm from "./UserOrderNewForm";
+// import { NavLink } from "react-router-dom";
 // import { Link } from "react-scroll";
 import UserOrderNewPiece from "./fieldsFormComponent/UserOrderNewPiece";
+import ModulAPI from "../../../../api/ModulAPI";
 class UserOrderNew extends Component {
   constructor(props) {
     super(props);
@@ -109,9 +110,8 @@ class UserOrderNew extends Component {
   };
 
   handleSelectSenderDistrict = (e) => {
-    const value = e.target.value;
     let userOrder = this.state.userOrder;
-    userOrder.senderDetails.district = value;
+    userOrder.senderDetails.district = e.target.value;
     this.setState({
       userOrder,
     });
@@ -126,20 +126,7 @@ class UserOrderNew extends Component {
   };
 
   fetchHeadquarters = () => {
-    fetch("http://localhost:8000/api/headquarters/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
+    ModulAPI.get(this.props.accessToken, "headquarters", "get")
       .then((allHeadquarters) => {
         this.setState({
           allHeadquarters: allHeadquarters,
@@ -149,20 +136,7 @@ class UserOrderNew extends Component {
   };
 
   fetchDistricts = () => {
-    fetch("http://localhost:8000/api/district/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
+    ModulAPI.get(this.props.accessToken, "district", "get")
       .then((allDistrict) => {
         this.setState({
           allDistrict: allDistrict,
@@ -179,24 +153,7 @@ class UserOrderNew extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.userOrder);
-    fetch("http://localhost:8000/api/user-order/new", {
-      method: "post",
-      body: json,
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          return response;
-        }
-        if (response.status === 400) {
-          return response;
-        }
-        throw new Error("Something went wrong...");
-      })
-      .then((response) => response.json())
+    ModulAPI.post(this.props.accessToken, "user-order/new", "post", json)
       .then((userOrder) => {
         this.props.history.push({
           pathname: "/user-order",
@@ -204,12 +161,12 @@ class UserOrderNew extends Component {
           active: true,
         });
       })
-
       .catch((error) => console.log(error));
   };
 
   // render() {
   //   return (
+  // problem z handleSubmit
   //     <UserOrderNewForm
   //       handleSubmit={this.handleSubmit}
   //       handleChangeBase={this.handleChangeBase}

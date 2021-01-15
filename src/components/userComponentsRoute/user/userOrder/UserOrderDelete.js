@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ModulAPI from "../../../../api/ModulAPI";
 
 class UserOrderDelete extends Component {
   constructor(props) {
@@ -8,23 +9,14 @@ class UserOrderDelete extends Component {
 
   handleClickDelete(e) {
     e.preventDefault();
-    fetch("http://localhost:8000/api/user-order/" + this.props.id, {
-      method: "delete",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.status === 204) {
-          return response;
-        }
-        throw new Error("Something went wrong...");
-      })
-      .then((response) => {
-        this.props.history.push("/user-order");
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.delete(
+      this.props.accessToken,
+      "user-order",
+      "delete",
+      this.props.id,
+      this.props.history,
+      "/user-order"
+    );
   }
 
   render() {

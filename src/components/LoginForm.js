@@ -35,7 +35,6 @@ class LoginForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     let json = JSON.stringify({
       grant_type: "password",
       client_id: "1_5w8zrdasdafr4tregd454cw0c0kswcgs0oks40s",

@@ -20,8 +20,9 @@ class User extends Component {
   }
 
   componentDidMount() {
-    ModulAPI.getAllUsers({ ...this.props }).then((users) => {
-      console.log("coś poszło");
+    ModulAPI.get(this.props.accessToken, "user", "get").then((users) => {
+      users.reverse();
+      console.log(users);
       this.setState({
         users: users,
       });
@@ -31,27 +32,12 @@ class User extends Component {
   }
 
   getUserRole() {
-    fetch("http://localhost:8000/api/current-user/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response);
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((user) => {
-        this.setState({
-          user: user,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.get(this.props.accessToken, "current-user", "get").then((user) => {
+      console.log(user);
+      this.setState({
+        user: user,
+      });
+    });
   }
 
   setActiveUserId = () => {
@@ -108,20 +94,7 @@ class User extends Component {
     }
   };
 
-  // hideLessButton = () => {
-  //   if (this.state.count > 1) {
-  //     this.setState({
-  //       showLessButton: true,
-  //     });
-  //   } else if (this.state.count == 1) {
-  //     this.setState({
-  //       showLessButton: false,
-  //     });
-  //   }
-  //   console.log(this.state.showLessButton);
-  // };
-
-  getOrders = () => {
+  getUsers = () => {
     let users = [...this.state.users];
     let n = 5;
     let increment = this.state.count;
@@ -150,7 +123,7 @@ class User extends Component {
           </div>
           <table className="table table-striped table-hover table-sm table-responsive-sm">
             <UserListHeader />
-            {this.getOrders()}
+            {this.getUsers()}
           </table>
           <div className="col-2 offset-5">
             <div className="col-8 offset-2">

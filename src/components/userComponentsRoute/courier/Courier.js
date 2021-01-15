@@ -4,6 +4,7 @@ import CourierList from "./CourierList";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { animateScroll } from "react-scroll";
+import ModulAPI from "../../../api/ModulAPI";
 
 class Courier extends Component {
   constructor(props) {
@@ -17,27 +18,12 @@ class Courier extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/courier/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((couriers) => {
-        couriers.reverse();
-        this.setState({
-          couriers: couriers,
-        });
-      })
-      .catch((error) => console.log(error));
+    ModulAPI.get(this.props.accessToken, "courier", "get").then((couriers) => {
+      couriers.reverse();
+      this.setState({
+        couriers: couriers,
+      });
+    });
     this.scrollToBottom();
   }
 

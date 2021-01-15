@@ -38,13 +38,13 @@ class CourierEditForm extends Component {
               <div className="form-group row">
                 <label
                   htmlFor="name"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Name:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="text"
                     id="name"
                     name="name"
@@ -54,14 +54,14 @@ class CourierEditForm extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="surname"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Surname:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -73,14 +73,14 @@ class CourierEditForm extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Password:
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -97,15 +97,15 @@ class CourierEditForm extends Component {
                   )}
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="password"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Confirm Password
                 </label>
 
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="password"
@@ -117,14 +117,14 @@ class CourierEditForm extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="phoneNumber"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   Phone Number
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="text"
@@ -136,14 +136,14 @@ class CourierEditForm extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="email"
-                  class=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
+                  className=" col-xl-5 col-lg-4 col-sm-3 col-form-label"
                 >
                   E-mail
                 </label>
-                <div class="col-xl-7 col-lg-8 col-sm-9 col-12">
+                <div className="col-xl-7 col-lg-8 col-sm-9 col-12">
                   <input
                     className="form-control"
                     type="email"

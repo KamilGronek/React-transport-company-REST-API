@@ -13,45 +13,113 @@
 
 //getUserOrders(){}
 
-// const ModulAPI = {
-//   getAllUsers: async function () {
-//     fetch("http://localhost:8000/api/user/", {
-//       method: "get",
-//       headers: new Headers({
-//         Authorization: "Bearer " + this.accessToken,
-//         "Content-Type": "application/json",
-//       }),
-//     })
-//       .then((response) => {
-//         if (response.status === 200) {
-//           console.log(response);
-//           return response;
-//         }
-//         throw Error(response.status);
-//       })
-//       .then((response) => response.json())
-//       .then((users) => {
-//         users.reverse();
-
-//         console.log(users);
-//         this.setState({
-//           users: users,
-//         });
-//       })
-//       .catch((error) => console.log(error));
-//     // this.getUserRole();
-//     // this.scrollToBottom();
-//   },
-// };
-
-// export default ModulAPI;
-
 const ModulAPI = {
-  getAllUsers: async function (props) {
-    fetch("http://localhost:8000/api/user/", {
-      method: "get",
+  get: async function (accessToken, endpoint, method) {
+    return fetch(`http://localhost:8000/api/${endpoint}/`, {
+      method: method,
       headers: new Headers({
-        Authorization: "Bearer " + props.accessToken,
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          console.log(accessToken);
+          return response;
+        }
+        throw Error(response.status);
+      })
+      .then((response) => response.json())
+      .then((results) => {
+        return results;
+      })
+      .catch((error) => console.log(error));
+  },
+
+  post: async function (accessToken, endpoint, method, json, handleError) {
+    return fetch(`http://localhost:8000/api/${endpoint}`, {
+      method: method,
+      body: json,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          return response;
+        }
+        if (response.status === 400) {
+          return response.json().then((res) => {
+            return handleError(res);
+          });
+        }
+        throw new Error("Something went wrong ...");
+      })
+      .then((response) => response.json())
+      .then((results) => {
+        return results;
+      })
+      .catch((error) => console.log(error));
+  },
+
+  delete: async function (
+    accessToken,
+    endpoint,
+    method,
+    id,
+    history,
+    endpointUser
+  ) {
+    return fetch(`http://localhost:8000/api/${endpoint}/` + id, {
+      method: method,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          return response;
+        }
+        throw new Error("Something went wrong...");
+      })
+      .then((response) => {
+        history.push(endpointUser);
+        return response;
+      })
+      .catch((error) => console.log(error));
+  },
+
+  getId: async function (accessToken, endpoint, method, id) {
+    return fetch(`http://localhost:8000/api/${endpoint}/` + id, {
+      method: method,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          return response;
+        }
+        throw Error(response.status);
+      })
+      .then((response) => response.json())
+      .then((results) => {
+        return results;
+      })
+      .catch((error) => console.log(error));
+  },
+
+  getStatusId: async function (accessToken, endpoint, method, id) {
+    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/status`, {
+      method: method,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
         "Content-Type": "application/json",
       }),
     })
@@ -62,13 +130,87 @@ const ModulAPI = {
         throw Error(response.status);
       })
       .then((response) => response.json())
-      //   .then((users) =>
-      //   {
-      //     users.reverse();
-      //     this.setState({
-      //       users: users,
-      //     });
-      //   })
+      .then((results) => {
+        return results;
+      })
+      .catch((error) => console.log(error));
+  },
+
+  putStatusId: async function (
+    accessToken,
+    endpoint,
+    method,
+    id,
+    json,
+    history
+  ) {
+    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/status`, {
+      method: method,
+      body: json,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          history.push("/courier-order");
+          return response;
+        }
+        if (response.status === 400) {
+          return response;
+        }
+        throw new Error("Something went wrong...");
+      })
+      .catch((error) => console.log(error));
+  },
+
+  putId: async function (accessToken, endpoint, method, id, json, history) {
+    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/edit`, {
+      method: method,
+      body: json,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          history.push("/user");
+          return response;
+        }
+        if (response.status === 400) {
+          return response.json();
+
+          // .then((res) => {
+          //   this.handleErrorForm(res);
+          // });
+        }
+        throw new Error("Something went wrong...");
+      })
+
+      .catch((error) => console.log(error));
+  },
+
+  putIdEdit: async function (accessToken, endpoint, method, id, json, history) {
+    fetch(`http://localhost:8000/api/${endpoint}/` + id + "/edit/user", {
+      method: method,
+      body: json,
+      headers: new Headers({
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          history.push("/user-order");
+          return response;
+        }
+        if (response.status === 400) {
+          return response;
+        }
+        throw new Error("Something went wrong...");
+      })
       .catch((error) => console.log(error));
   },
 };
