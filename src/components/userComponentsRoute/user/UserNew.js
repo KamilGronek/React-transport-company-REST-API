@@ -41,8 +41,8 @@ class UserNew extends Component {
     // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
-    user["confirmPassword"]["first"] = value;
-    user["confirmPassword"]["second"] = this.state.user.confirmPassword.second;
+    user.confirmPassword.first = value;
+
     console.log(this.state);
     this.setState({
       user,
@@ -53,8 +53,7 @@ class UserNew extends Component {
     // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
-    user["confirmPassword"]["first"] = this.state.user.confirmPassword.first;
-    user["confirmPassword"]["second"] = value;
+    user.confirmPassword.second = value;
     this.setState({
       user,
     });
@@ -99,16 +98,52 @@ class UserNew extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.user);
-    ModulAPI.post(this.props.accessToken, "user/new", "post", json).then(
-      (user) => {
+    ModulAPI.post(this.props.accessToken, "user/new", "post", json)
+      .then((user) => {
         this.props.history.push({
           pathname: "/user",
           state: { userId: user.id },
           active: true,
         });
-      }
-    );
+      })
+      .then(this.status)
+      .then((res) => res.json())
+      .catch((error) => {
+        return Promise.resolve();
+      });
   };
+
+  status = (res) => {
+    if (res.status === 400) {
+      console.log("400");
+      this.handleErrorForm(res);
+    }
+    return res;
+  };
+
+  //-------------------------------------------
+  //   export function fetchVehicle(id) {
+  //     return dispatch => {
+  //         return dispatch({
+  //             type: 'FETCH_VEHICLE',
+  //             payload: fetch(`http://swapi.co/api/vehicles/${id}/`)
+  //                 .then(status)
+  //                 .then(res => res.json())
+  //                 .catch(error => {
+  //                     return Promise.reject()
+  //                 })
+  //             });
+  //     };
+  // }
+
+  // function status(res) {
+  //     if (!res.ok) {
+  //         throw new Error(res.statusText);
+  //     }
+  //     return res;
+  // }
+
+  //============================================
 
   handleErrorForm = (res) => {
     let error = this.state.error;

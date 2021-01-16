@@ -24,8 +24,6 @@ const ModulAPI = {
     })
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
-          console.log(accessToken);
           return response;
         }
         throw Error(response.status);
@@ -37,7 +35,7 @@ const ModulAPI = {
       .catch((error) => console.log(error));
   },
 
-  post: async function (accessToken, endpoint, method, json, handleError) {
+  post: async function (accessToken, endpoint, method, json) {
     return fetch(`http://localhost:8000/api/${endpoint}`, {
       method: method,
       body: json,
@@ -51,18 +49,15 @@ const ModulAPI = {
         if (response.status === 201) {
           return response;
         }
-        if (response.status === 400) {
-          return response.json().then((res) => {
-            return handleError(res);
-          });
-        }
-        throw new Error("Something went wrong ...");
+        // if (response.status === 400) {
+        //   return response;
+        // } else {
+        //   throw new Error("Something went wrong ...");
+        // }
       })
-      .then((response) => response.json())
-      .then((results) => {
-        return results;
-      })
-      .catch((error) => console.log(error));
+      .then((response) => response.json());
+
+    // .catch((error) => console.log(error));
   },
 
   delete: async function (
