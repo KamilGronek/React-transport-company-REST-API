@@ -1,63 +1,46 @@
-//1.FASADA: ------------------------------------
+const BASE_URL = "http://localhost:8000/api/";
 
-// getAllDistricts() {}
-// 1). dane  , akcje
-
-//changeUserOrder() {}
-
-// 2).przeniesienie  wszystkich fetchy do funkcji
-
-//getDistrictById(){}
-
-//modifyDistrict(){}
-
-//getUserOrders(){}
+async function makeRequest(method, accessToken, json) {
+  const response = {
+    method,
+    headers: new Headers({
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    }),
+    body: json,
+  };
+  return response;
+}
 
 const ModulAPI = {
   get: async function (accessToken, endpoint, method) {
-    return fetch(`http://localhost:8000/api/${endpoint}/`, {
-      method: method,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/`,
+      await makeRequest(method, accessToken)
+    )
       .then((response) => {
-        if (response.status === 200) {
-          return response;
+        if (!response.ok) {
+          throw Error(response.status);
+        } else {
+          return response.json();
         }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((results) => {
-        return results;
       })
       .catch((error) => console.log(error));
   },
 
   post: async function (accessToken, endpoint, method, json) {
-    return fetch(`http://localhost:8000/api/${endpoint}`, {
-      method: method,
-      body: json,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}`,
+      await makeRequest(method, accessToken, json)
+    )
       .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          return response;
+        if (response.status !== 201) {
+          throw new Error("Something went wrong...");
+        } else {
+          return response.json();
         }
-        // if (response.status === 400) {
-        //   return response;
-        // } else {
-        //   throw new Error("Something went wrong ...");
-        // }
       })
-      .then((response) => response.json());
-
-    // .catch((error) => console.log(error));
+      .catch((error) => console.log(error));
   },
 
   delete: async function (
@@ -68,65 +51,50 @@ const ModulAPI = {
     history,
     endpointUser
   ) {
-    return fetch(`http://localhost:8000/api/${endpoint}/` + id, {
-      method: method,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/` + id,
+      await makeRequest(method, accessToken)
+    )
       .then((response) => {
-        if (response.status === 204) {
+        if (response.status !== 204) {
+          throw new Error("Something went wrong...");
+        } else {
           return response;
         }
-        throw new Error("Something went wrong...");
       })
       .then((response) => {
         history.push(endpointUser);
-        return response;
+        return response.json();
       })
       .catch((error) => console.log(error));
   },
 
   getId: async function (accessToken, endpoint, method, id) {
-    return fetch(`http://localhost:8000/api/${endpoint}/` + id, {
-      method: method,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/` + id,
+      await makeRequest(method, accessToken)
+    )
       .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          return response;
+        if (!response.ok) {
+          throw Error(response.status);
+        } else {
+          return response.json();
         }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((results) => {
-        return results;
       })
       .catch((error) => console.log(error));
   },
 
   getStatusId: async function (accessToken, endpoint, method, id) {
-    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/status`, {
-      method: method,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/` + id + `/status`,
+      await makeRequest(method, accessToken)
+    )
       .then((response) => {
-        if (response.status === 200) {
-          return response;
+        if (!response.ok) {
+          throw Error(response.status);
+        } else {
+          return response.json();
         }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((results) => {
-        return results;
       })
       .catch((error) => console.log(error));
   },
@@ -139,72 +107,50 @@ const ModulAPI = {
     json,
     history
   ) {
-    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/status`, {
-      method: method,
-      body: json,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/` + id + `/status`,
+      await makeRequest(method, accessToken, json)
+    )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.ok) {
           history.push("/courier-order");
-          return response;
+          return response.json();
+        } else {
+          throw new Error("Something went wrong...");
         }
-        if (response.status === 400) {
-          return response;
-        }
-        throw new Error("Something went wrong...");
       })
       .catch((error) => console.log(error));
   },
 
   putId: async function (accessToken, endpoint, method, id, json, history) {
-    return fetch(`http://localhost:8000/api/${endpoint}/` + id + `/edit`, {
-      method: method,
-      body: json,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    return fetch(
+      `${BASE_URL}${endpoint}/` + id + `/edit`,
+      await makeRequest(method, accessToken, json)
+    )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.ok) {
           history.push("/user");
-          return response;
-        }
-        if (response.status === 400) {
           return response.json();
-
-          // .then((res) => {
-          //   this.handleErrorForm(res);
-          // });
+        } else {
+          throw new Error("Something went wrong...");
         }
-        throw new Error("Something went wrong...");
       })
 
       .catch((error) => console.log(error));
   },
 
   putIdEdit: async function (accessToken, endpoint, method, id, json, history) {
-    fetch(`http://localhost:8000/api/${endpoint}/` + id + "/edit/user", {
-      method: method,
-      body: json,
-      headers: new Headers({
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
+    fetch(
+      `${BASE_URL}${endpoint}/` + id + "/edit/user",
+      await makeRequest(method, accessToken, json)
+    )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.ok) {
           history.push("/user-order");
-          return response;
+          return response.json();
+        } else {
+          throw new Error("Something went wrong...");
         }
-        if (response.status === 400) {
-          return response;
-        }
-        throw new Error("Something went wrong...");
       })
       .catch((error) => console.log(error));
   },

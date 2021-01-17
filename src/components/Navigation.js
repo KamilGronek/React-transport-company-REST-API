@@ -26,7 +26,6 @@ class Navigation extends Component {
     this.setState({
       user: {},
       accessToken: null,
-      // hideNav: !this.state.hideNav,
     });
     this.removeAccessToken();
     this.props.reloadComponent();
