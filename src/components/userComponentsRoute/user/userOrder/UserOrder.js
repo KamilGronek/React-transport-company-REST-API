@@ -4,6 +4,7 @@ import UserOrderList from "./UserOrderList";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { animateScroll } from "react-scroll";
+import ModulAPI from "../../../../api/ModulAPI";
 
 class UserOrder extends Component {
   constructor(props) {
@@ -11,32 +12,21 @@ class UserOrder extends Component {
     this.state = {
       userOrders: [],
       active: false,
+      activeEdit: false,
       count: 1,
       showLessButton: false,
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/api/user-order/", {
-      method: "get",
-      headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw Error(response.status);
-      })
-      .then((response) => response.json())
-      .then((userOrders) => {
+    ModulAPI.get(this.props.accessToken, "user-order", "get").then(
+      (userOrders) => {
+        userOrders.reverse();
         this.setState({
-          userOrders: userOrders.reverse(),
+          userOrders: userOrders,
         });
-      })
-      .catch((error) => console.log(error));
+      }
+    );
     this.scrollToBottom();
   }
 
@@ -46,6 +36,18 @@ class UserOrder extends Component {
     } else {
       if (this.props.history.location.active) {
         return this.props.history.location.state.userOrderId;
+      } else {
+        return "";
+      }
+    }
+  };
+
+  setActiveUserOrderId = () => {
+    if (this.state.activeEdit) {
+      return "";
+    } else {
+      if (this.props.history.location.activeEdit) {
+        return this.props.history.location.state.userOrderEditId;
       } else {
         return "";
       }
@@ -98,6 +100,7 @@ class UserOrder extends Component {
         key={userOrder.id}
         userOrder={userOrder}
         userOrderId={this.setActiveUserId()}
+        userOrderEditId={this.setActiveUserOrderId()}
       />
     ));
   }

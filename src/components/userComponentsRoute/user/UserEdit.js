@@ -77,50 +77,24 @@ class UserEdit extends Component {
     });
   };
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   let json = JSON.stringify(this.state.user);
-  //   fetch(
-  //     "http://localhost:8000/api/user/" + this.props.location.id + "/edit",
-  //     {
-  //       method: "put",
-  //       body: json,
-  //       headers: new Headers({
-  //         Authorization: "Bearer " + this.props.accessToken,
-  //         "Content-Type": "application/json",
-  //       }),
-  //     }
-  //   )
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         this.props.history.push("/user");
-  //         return response;
-  //       }
-  //       if (response.status === 400) {
-  //         return response.json().then((res) => {
-  //           this.handleErrorForm(res);
-  //         });
-  //       }
-  //       throw new Error("Something went wrong...");
-  //     })
-
-  //     .catch((error) => console.log(error));
-  // };
-
   handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.user);
-    ModulAPI.putId(
+    ModulAPI.put(
       this.props.accessToken,
       "user",
       "put",
       this.props.location.id,
       json,
-      this.props.history
-    );
-    // .then((res) => {
-    //   this.handleErrorForm(res);
-    // });
+      "/edit"
+    ).then((response) => {
+      this.props.history.push({
+        pathname: "/user",
+        state: { userEdit: this.props.location.id },
+        activeEdit: true,
+      });
+      return response;
+    });
   };
 
   handleErrorForm = (res) => {

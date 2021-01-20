@@ -8,7 +8,8 @@ class CourierOrderList extends Component {
 
   render() {
     const { id, number, description, comments } = this.props.courierOrder;
-
+    const { statusChangeId } = this.props;
+    console.log(this.props.statusChangeId);
     return (
       <>
         <tbody>
@@ -29,7 +30,8 @@ class CourierOrderList extends Component {
             <td>{this.props.courierOrder.sender_details.name}</td>
             <td>{this.props.courierOrder.recipient_details.name}</td>
             <td>
-              {this.props.courierOrder.status === "PROVIDED" ? (
+              {this.props.courierOrder.status === "PROVIDED" ||
+              id === statusChangeId ? (
                 <span style={{ color: "lightgreen" }}>
                   {" "}
                   {this.props.courierOrder.status}

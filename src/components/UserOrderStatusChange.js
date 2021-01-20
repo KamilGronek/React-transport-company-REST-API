@@ -5,9 +5,6 @@ import ModulAPI from "../api/ModulAPI";
 class UserOrderStatusChange extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeStatus = this.handleChangeStatus.bind(this);
-    super(props);
     this.state = {
       changeStatus: {
         status: "",
@@ -16,21 +13,22 @@ class UserOrderStatusChange extends Component {
     };
   }
 
-  handleChangeStatus(e) {
+  handleChangeStatus = (e) => {
     const value = e.target.value;
     let changeStatus = this.state.changeStatus;
     changeStatus.status = value;
     this.setState({
       changeStatus,
     });
-  }
+  };
 
   componentDidMount() {
-    ModulAPI.getStatusId(
+    ModulAPI.getId(
       this.props.accessToken,
       "user-order",
       "get",
-      this.props.location.id
+      this.props.location.id,
+      `/status`
     )
       .then((userOrderStatuses) => {
         this.setState({
@@ -46,21 +44,57 @@ class UserOrderStatusChange extends Component {
       .catch((error) => console.log(error));
   }
 
-  handleSubmit(e) {
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   let json = JSON.stringify(this.state.changeStatus);
+
+  //   ModulAPI.put(
+  //     this.props.accessToken,
+  //     "user-order",
+  //     "put",
+  //     this.props.location.id,
+  //     json,
+  //     this.props.history,
+  //     "/status",
+  //     "/courier-order"
+  //   );
+  // };
+
+  handleSubmit = (e) => {
     e.preventDefault();
     let json = JSON.stringify(this.state.changeStatus);
-
-    ModulAPI.putStatusId(
-      this.props.accessToken,
-      "user-order",
-      "put",
-      this.props.location.id,
-      json,
-      this.props.history
-    );
-  }
+    fetch(
+      "http://localhost:8000/api/user-order/" +
+        this.props.location.id +
+        "/status",
+      {
+        method: "put",
+        body: json,
+        headers: new Headers({
+          Authorization: "Bearer " + this.props.accessToken,
+          "Content-Type": "application/json",
+        }),
+      }
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          this.props.history.push({
+            pathname: "/courier-order",
+            state: { statusChangeId: this.props.location.id },
+            activeEdit: true,
+          });
+          return response;
+        }
+        if (response.status === 400) {
+          return response;
+        }
+        throw new Error("Something went wrong...");
+      })
+      .catch((error) => console.log(error));
+  };
 
   render() {
+    console.log(this.props.location.id);
     return (
       <>
         <h1

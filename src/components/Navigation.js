@@ -15,12 +15,36 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    ModulAPI.get(this.props.accessToken, "current-user", "get").then((user) => {
-      this.setState({
-        user: user,
-      });
-    });
+    fetch("http://localhost:8000/api/current-user/", {
+      method: "get",
+      headers: new Headers({
+        Authorization: "Bearer " + this.props.accessToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(response);
+          return response;
+        }
+        throw Error(response.status);
+      })
+      .then((response) => response.json())
+      .then((user) => {
+        this.setState({
+          user: user,
+        });
+      })
+      .catch((error) => console.log(error));
   }
+
+  // componentDidMount() {
+  //   ModulAPI.get(this.props.accessToken, "current-user", "get").then((user) => {
+  //     this.setState({
+  //       user: user,
+  //     });
+  //   });
+  // }
 
   handleLogout = () => {
     this.setState({

@@ -8,9 +8,9 @@ class CourierEdit extends Component {
 
     this.state = {
       courier: {
-        // id:""
+        // id: "",
         user: {
-          // id:""
+          id: "",
           name: "",
           surname: "",
           confirmPassword: {
@@ -101,7 +101,11 @@ class CourierEdit extends Component {
     )
       .then((response) => {
         if (response.status === 200) {
-          this.props.history.push("/courier");
+          this.props.history.push({
+            pathname: "/courier",
+            // state: { courierEdit: this.state.courier.user.id },
+            activeEdit: true,
+          });
           return response;
         }
         if (response.status === 400) {
@@ -131,6 +135,7 @@ class CourierEdit extends Component {
   };
 
   render() {
+    console.log(this.state.courier.user.id);
     return (
       <CourierEditForm
         handleSubmit={this.handleSubmit}

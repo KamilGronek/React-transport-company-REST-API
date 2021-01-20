@@ -2,6 +2,8 @@ import React, { Component } from "react";
 // import { Redirect } from "react-router-dom";
 import ModulAPI from "../../../api/ModulAPI";
 import UserNewForm from "./UserNewForm";
+// import { NavLink } from "react-router-dom";
+
 class UserNew extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ class UserNew extends Component {
         confirmPasswordFirst: [],
         email: [],
       },
-      active: this.props.location.active,
+      // active: this.props.location.active,
     };
   }
 
@@ -38,19 +40,15 @@ class UserNew extends Component {
   };
 
   handleChangeConfirmPassword = (e) => {
-    // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
     user.confirmPassword.first = value;
-
-    console.log(this.state);
     this.setState({
       user,
     });
   };
 
   handleChangeConfirmPassword2 = (e) => {
-    // const name = e.target.name;
     const value = e.target.value;
     let user = this.state.user;
     user.confirmPassword.second = value;
@@ -58,42 +56,6 @@ class UserNew extends Component {
       user,
     });
   };
-
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   let json = JSON.stringify(this.state.user);
-  //   fetch("http://localhost:8000/api/user/new", {
-  //     method: "post",
-  //     body: json,
-  //     headers: new Headers({
-  //       Authorization: "Bearer " + this.props.accessToken,
-  //       "Content-Type": "application/json",
-  //     }),
-  //   })
-  //     .then((response) => {
-  //       console.log(response);
-  //       if (response.status === 201) {
-  //         return response;
-  //       }
-  //       if (response.status === 400) {
-  //         return response.json().then((res) => {
-  //           this.handleErrorForm(res);
-  //         });
-  //       }
-  //       throw new Error("Something went wrong ...");
-  //     })
-  //     .then((response) => response.json())
-  //     .then((user) => {
-  //       console.log(this.props.history.location.active);
-  //       console.log(this.state.active);
-  //       this.props.history.push({
-  //         pathname: "/user",
-  //         state: { userId: user.id },
-  //         active: true,
-  //       });
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -121,33 +83,8 @@ class UserNew extends Component {
     return res;
   };
 
-  //-------------------------------------------
-  //   export function fetchVehicle(id) {
-  //     return dispatch => {
-  //         return dispatch({
-  //             type: 'FETCH_VEHICLE',
-  //             payload: fetch(`http://swapi.co/api/vehicles/${id}/`)
-  //                 .then(status)
-  //                 .then(res => res.json())
-  //                 .catch(error => {
-  //                     return Promise.reject()
-  //                 })
-  //             });
-  //     };
-  // }
-
-  // function status(res) {
-  //     if (!res.ok) {
-  //         throw new Error(res.statusText);
-  //     }
-  //     return res;
-  // }
-
-  //============================================
-
   handleErrorForm = (res) => {
     let error = this.state.error;
-    // console.log(res.form.children.confirmPassword.children.first);
     if (
       res.form.children.confirmPassword.children.first.hasOwnProperty("errors")
     ) {
@@ -166,7 +103,6 @@ class UserNew extends Component {
       error,
     });
   };
-
   render() {
     return (
       <UserNewForm
@@ -186,19 +122,3 @@ class UserNew extends Component {
 }
 
 export default UserNew;
-
-// .then((response) => response.json())
-// .then((res) => {
-//   this.setState({
-//     error: {
-//       email: [res.form.children.email.errors[0]],
-//     },
-//   });
-// })
-// .then((res) => {
-//   this.setState({
-//     confirmPasswordFirst: [
-//       res.form.children.confirmPassword.children.first.errors[0],
-//     ],
-//   });
-// })

@@ -12,9 +12,22 @@ class CourierOrder extends Component {
       courierOrders: [],
       user: {},
       count: 1,
+      activeEdit: false,
       showLessButton: false,
     };
   }
+
+  setActiveUserId = () => {
+    if (this.state.activeEdit) {
+      return "";
+    } else {
+      if (this.props.history.location.activeEdit) {
+        return this.props.history.location.state.statusChangeId;
+      } else {
+        return "";
+      }
+    }
+  };
 
   // getUserRole() {
   //   fetch("http://localhost:8000/api/current-user/", {
@@ -128,7 +141,11 @@ class CourierOrder extends Component {
     let arrayLength = courierOrders.slice(0, n * increment || decrement);
     console.log(arrayLength.length);
     return arrayLength.map((courierOrder) => (
-      <CourierOrderList key={courierOrder.id} courierOrder={courierOrder} />
+      <CourierOrderList
+        key={courierOrder.id}
+        courierOrder={courierOrder}
+        statusChangeId={this.setActiveUserId()}
+      />
     ));
   }
 

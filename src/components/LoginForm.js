@@ -90,7 +90,6 @@ class LoginForm extends Component {
                 required
                 autoFocus
                 onChange={this.handleChange}
-                value={this.state.email}
               />
             </div>
             <div className="form-group">
@@ -105,7 +104,6 @@ class LoginForm extends Component {
                 placeholder="Password"
                 required
                 onChange={this.handleChange}
-                value={this.state.password}
               />
             </div>
             {this.state.errors.errorsEmail && (

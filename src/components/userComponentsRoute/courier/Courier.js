@@ -12,6 +12,7 @@ class Courier extends Component {
     this.state = {
       couriers: [],
       active: false,
+      activeEdit: false,
       count: 1,
       showLessButton: false,
     };
@@ -33,6 +34,18 @@ class Courier extends Component {
     } else {
       if (this.props.history.location.active) {
         return this.props.history.location.state.courierNewId;
+      } else {
+        return "";
+      }
+    }
+  };
+
+  setEditCourierId = () => {
+    if (this.state.activeEdit) {
+      return "";
+    } else {
+      if (this.props.history.location.activeEdit) {
+        return this.props.history.location.state.courierEdit;
       } else {
         return "";
       }
@@ -84,12 +97,13 @@ class Courier extends Component {
         key={courier.id}
         courier={courier}
         courierNewId={this.setActiveUserId()}
+        courierEditId={this.setEditCourierId()}
       />
     ));
   }
 
   render() {
-    // const couriers = this.state.couriers;
+    // console.log(this.props.location.state.courierEdit);
     return (
       <>
         <div className="container">

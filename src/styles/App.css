@@ -47,6 +47,11 @@ body {
   animation-duration: 10s;
 }
 
+.yellow {
+  animation: mymove2;
+  animation-duration: 10s;
+}
+
 .lightgreen {
   color: #90ee90;
 }
@@ -71,5 +76,11 @@ hr.hr {
 @keyframes mymove {
   from {
     color: lightgreen;
+  }
+}
+
+@keyframes mymove2 {
+  from {
+    color: yellow;
   }
 }

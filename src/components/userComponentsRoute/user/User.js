@@ -14,6 +14,7 @@ class User extends Component {
       user: {},
       color: "red",
       active: false,
+      activeEdit: false,
       count: 1,
       showLessButton: false,
     };
@@ -55,6 +56,18 @@ class User extends Component {
     //   : this.props.history.location.active
     //   ? this.props.history.location.state.userId
     //   : ""
+  };
+
+  setEditUserId = () => {
+    if (this.state.activeEdit) {
+      return "";
+    } else {
+      if (this.props.history.location.activeEdit) {
+        return this.props.history.location.state.userEdit;
+      } else {
+        return "";
+      }
+    }
   };
 
   componentDidUpdate() {
@@ -108,13 +121,17 @@ class User extends Component {
     console.log(this.state.count);
 
     return arrayLength.map((user) => (
-      <UserList key={user.id} user={user} userId={this.setActiveUserId()} />
+      <UserList
+        key={user.id}
+        user={user}
+        userId={this.setActiveUserId()}
+        userEditid={this.setEditUserId()}
+      />
     ));
   };
 
   render() {
     const { role } = this.state.user;
-
     return (
       <>
         <div className="container">
