@@ -102,24 +102,27 @@ class UserOrderNew extends Component {
   //---------------------------------------------------------
 
   handleChangeHeadquarters = (e) => {
+    const value = e.target.value;
     let userOrder = this.state.userOrder;
-    userOrder.headquarters = e.target.value;
+    userOrder.headquarters = value;
     this.setState({
       userOrder,
     });
   };
 
   handleSelectSenderDistrict = (e) => {
+    const value = e.target.value;
     let userOrder = this.state.userOrder;
-    userOrder.senderDetails.district = e.target.value;
+    userOrder.senderDetails.district = value;
     this.setState({
       userOrder,
     });
   };
 
   handleSelectRecipientDistrict = (e) => {
+    const value = e.target.value;
     let userOrder = this.state.userOrder;
-    userOrder.recipientDetails.district = e.target.value;
+    userOrder.recipientDetails.district = value;
     this.setState({
       userOrder,
     });
