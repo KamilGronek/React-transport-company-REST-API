@@ -1,157 +1,121 @@
-import React, { Component } from "react";
+import React, { useReducer, useEffect } from "react";
 import ModulAPI from "../../../../api/ModulAPI";
 import UserOrderEditForm from "./UserOrderEditForm";
-// import { NavLink } from "react-router-dom";
-// import { Link } from "react-scroll";
-class UserOrderEdit extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userOrder: {
-        number: "",
-        description: "",
-        comments: "",
-        headquarters: "",
-        package: {
-          weight: "",
-          width: "",
-          height: "",
-          length: "",
-        },
-        senderDetails: {
-          name: "",
-          surname: "",
-          city: "",
-          street: "",
-          houseNumber: "",
-          apartmentNumber: "",
-          email: "",
-          district: "",
-          phoneNumber: "",
-        },
-        recipientDetails: {
-          name: "",
-          surname: "",
-          city: "",
-          street: "",
-          houseNumber: "",
-          apartmentNumber: "",
-          email: "",
-          district: "",
-          phoneNumber: "",
-        },
-      },
-      allHeadquarters: [],
-      allDistrict: [],
-      changeArrow: true,
-      hrLine: true,
-    };
-  }
+import { initialUserOrderState } from "../../../../InitialState";
 
-  handleSwitchArrow = () => {
-    this.setState({
-      changeArrow: !this.state.changeArrow,
-      hrLine: !this.state.hrLine,
+const stateReducer = (prevState, stateChanges) => {
+  return {
+    ...prevState,
+    ...stateChanges,
+  };
+};
+
+function UserOrderEdit(props) {
+  const [state, setState] = useReducer(stateReducer, initialUserOrderState);
+
+  const handleSwitchArrow = () => {
+    setState({
+      changeArrow: !state.changeArrow,
+      hrLine: !state.hrLine,
     });
   };
 
-  handleChangeBase = (e) => {
-    console.log(this.state);
+  const handleChangeBase = (e) => {
+    console.log(state);
     const value = e.target.value;
     const name = e.target.name;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder[name] = value;
-    this.setState({
+    setState({
       userOrder,
     });
-    console.log(this.state);
   };
 
-  handleChangePackage = (e) => {
+  const handleChangePackage = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let packageValue = this.state.userOrder.package;
+    let packageValue = state.userOrder.package;
     packageValue[name] = value;
-    this.setState({
+    setState({
       packageValue,
     });
   };
 
-  handleChangeSenderDetails = (e) => {
+  const handleChangeSenderDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let senderDetails = this.state.userOrder.senderDetails;
+    let senderDetails = state.userOrder.senderDetails;
     senderDetails[name] = value;
-    this.setState({
+    setState({
       senderDetails,
     });
   };
 
-  handleChangeRecipientDetails = (e) => {
+  const handleChangeRecipientDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let recipientDetails = this.state.userOrder.recipientDetails;
+    let recipientDetails = state.userOrder.recipientDetails;
     recipientDetails[name] = value;
-    this.setState({
+    setState({
       recipientDetails,
     });
   };
   //---------------------------------------------------------
 
-  handleChangeHeadquarters = (e) => {
+  const handleChangeHeadquarters = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.headquarters = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  handleSelectSenderDistrict = (e) => {
+  const handleSelectSenderDistrict = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.senderDetails.district = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  handleSelectRecipientDistrict = (e) => {
+  const handleSelectRecipientDistrict = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.recipientDetails.district = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  fetchHeadquarters = () => {
-    ModulAPI.get(this.props.accessToken, "headquarters", "get").then(
+  const fetchHeadquarters = () => {
+    ModulAPI.get(props.accessToken, "headquarters", "get").then(
       (allHeadquarters) => {
-        this.setState({
+        setState({
           allHeadquarters: allHeadquarters,
         });
       }
     );
   };
 
-  fetchDistricts = () => {
-    ModulAPI.get(this.props.accessToken, "district", "get")
+  const fetchDistricts = () => {
+    ModulAPI.get(props.accessToken, "district", "get")
       .then((allDistrict) => {
-        this.setState({
+        setState({
           allDistrict: allDistrict,
         });
       })
       .catch((error) => console.log(error));
   };
 
-  getUserOrderEditValues = () => {
+  const getUserOrderEditValues = () => {
     // problem z   headquarters: response.headquarters.id,
-    fetch("http://localhost:8000/api/user-order/" + this.props.location.id, {
+    fetch("http://localhost:8000/api/user-order/" + props.location.id, {
       //read
       method: "get",
       headers: new Headers({
-        Authorization: "Bearer " + this.props.accessToken,
+        Authorization: "Bearer " + props.accessToken,
         "Content-Type": "application/json",
       }),
     })
@@ -163,7 +127,7 @@ class UserOrderEdit extends Component {
       })
       .then((response) => response.json())
       .then((response) => {
-        this.setState({
+        setState({
           userOrder: {
             number: response.number,
             description: response.description,
@@ -203,73 +167,60 @@ class UserOrderEdit extends Component {
       .catch((error) => console.log(error));
   };
 
-  componentDidMount() {
-    this.fetchHeadquarters();
-    this.fetchDistricts();
-    this.getUserOrderEditValues();
-  }
+  useEffect(() => {
+    fetchHeadquarters();
+    fetchDistricts();
+    getUserOrderEditValues();
+  }, []);
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let json = JSON.stringify(this.state.userOrder);
+    let json = JSON.stringify(state.userOrder);
     ModulAPI.put(
-      this.props.accessToken,
+      props.accessToken,
       "user-order",
       "put",
-      this.props.location.id,
+      props.location.id,
       json,
       "/edit/user"
     ).then((response) => {
-      this.props.history.push({
+      props.history.push({
         pathname: "/user-order",
-        state: { userOrderEditId: this.props.location.id },
+        state: { userOrderEditId: props.location.id },
         activeEdit: true,
       });
       return response;
     });
   };
 
-  render() {
-    const {
-      headquarters,
-      number,
-      description,
-      comments,
-      senderDetails,
-      recipientDetails,
-    } = this.state.userOrder;
-
-    return (
-      <>
-        <UserOrderEditForm
-          handleSubmit={this.handleSubmit}
-          handleChangeBase={this.handleChangeBase}
-          handleChangeHeadquarters={this.handleChangeHeadquarters}
-          allHeadquarters={this.state.allHeadquarters}
-          headquarters={headquarters}
-          handleChangePackage={this.handleChangePackage}
-          handleChangeSenderDetails={this.handleChangeSenderDetails}
-          handleSelectSenderDistrict={this.handleSelectSenderDistrict}
-          handleChangeRecipientDetails={this.handleChangeRecipientDetails}
-          handleSelectRecipientDistrict={this.handleSelectRecipientDistrict}
-          number={number}
-          description={description}
-          comments={comments}
-          senderDetails={senderDetails}
-          recipientDetails={recipientDetails}
-          changeArrow={this.state.changeArrow}
-          weight={this.state.userOrder.package.weight}
-          height={this.state.userOrder.package.height}
-          length={this.state.userOrder.package.length}
-          width={this.state.userOrder.package.width}
-          handleSwitchArrow={this.handleSwitchArrow}
-          hrLine={this.state.hrLine}
-          allDistrict={this.state.allDistrict}
-          district={this.state.userOrder.recipientDetails.district}
-        />
-      </>
-    );
-  }
+  return (
+    <UserOrderEditForm
+      handleSubmit={handleSubmit}
+      handleChangeBase={handleChangeBase}
+      handleChangeHeadquarters={handleChangeHeadquarters}
+      allHeadquarters={state.allHeadquarters}
+      headquarters={state.userOrder.headquarters}
+      handleChangePackage={handleChangePackage}
+      handleChangeSenderDetails={handleChangeSenderDetails}
+      handleSelectSenderDistrict={handleSelectSenderDistrict}
+      handleChangeRecipientDetails={handleChangeRecipientDetails}
+      handleSelectRecipientDistrict={handleSelectRecipientDistrict}
+      number={state.userOrder.number}
+      description={state.userOrder.description}
+      comments={state.userOrder.comments}
+      senderDetails={state.userOrder.senderDetails}
+      recipientDetails={state.userOrder.recipientDetails}
+      changeArrow={state.changeArrow}
+      weight={state.userOrder.package.weight}
+      height={state.userOrder.package.height}
+      length={state.userOrder.package.length}
+      width={state.userOrder.package.width}
+      handleSwitchArrow={handleSwitchArrow}
+      hrLine={state.hrLine}
+      allDistrict={state.allDistrict}
+      district={state.userOrder.recipientDetails.district}
+    />
+  );
 }
 
 export default UserOrderEdit;

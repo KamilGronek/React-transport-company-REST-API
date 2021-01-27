@@ -1,164 +1,128 @@
-import React, { Component } from "react";
+import React, { useReducer, useEffect } from "react";
 import UserOrderNewForm from "./UserOrderNewForm";
 // import { NavLink } from "react-router-dom";
 // import { Link } from "react-scroll";
 // import UserOrderNewPiece from "./fieldsFormComponent/UserOrderNewPiece";
 import ModulAPI from "../../../../api/ModulAPI";
-class UserOrderNew extends Component {
-  constructor(props) {
-    super(props);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      userOrder: {
-        number: "",
-        description: "",
-        comments: "",
-        headquarters: "",
-        package: {
-          weight: "",
-          width: "",
-          height: "",
-          length: "",
-        },
-        senderDetails: {
-          name: "",
-          surname: "",
-          city: "",
-          street: "",
-          houseNumber: "",
-          apartmentNumber: "",
-          email: "",
-          district: "",
-          phoneNumber: "",
-        },
-        recipientDetails: {
-          name: "",
-          surname: "",
-          city: "",
-          street: "",
-          houseNumber: "",
-          apartmentNumber: "",
-          email: "",
-          district: "",
-          phoneNumber: "",
-        },
-      },
-      allHeadquarters: [],
-      allDistrict: [],
-      changeArrow: true,
-      hrLine: true,
-      // active: this.props.location.active,
-    };
-  }
+import { initialUserOrderState } from "../../../../InitialState";
 
-  handleSwitchArrow = () => {
-    this.setState({
-      changeArrow: !this.state.changeArrow,
-      hrLine: !this.state.hrLine,
+const stateReducer = (prevState, stateChanges) => {
+  return {
+    ...prevState,
+    ...stateChanges,
+  };
+};
+
+function UserOrderNew(props) {
+  const [state, setState] = useReducer(stateReducer, initialUserOrderState);
+
+  const handleSwitchArrow = () => {
+    setState({
+      changeArrow: !state.changeArrow,
+      hrLine: !state.hrLine,
     });
   };
 
-  handleChangeBase = (e) => {
-    console.log(this.state);
+  const handleChangeBase = (e) => {
+    // console.log(state);
     const value = e.target.value;
     const name = e.target.name;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder[name] = value;
-    this.setState({
+    setState({
       userOrder,
     });
-    console.log(this.state);
   };
 
-  handleChangePackage = (e) => {
+  const handleChangePackage = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let packageValue = this.state.userOrder.package;
+    let packageValue = state.userOrder.package;
     packageValue[name] = value;
-    this.setState({
+    setState({
       packageValue,
     });
   };
 
-  handleChangeSenderDetails = (e) => {
+  const handleChangeSenderDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let senderDetails = this.state.userOrder.senderDetails;
+    let senderDetails = state.userOrder.senderDetails;
     senderDetails[name] = value;
-    this.setState({
+    setState({
       senderDetails,
     });
   };
 
-  handleChangeRecipientDetails = (e) => {
+  const handleChangeRecipientDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let recipientDetails = this.state.userOrder.recipientDetails;
+    let recipientDetails = state.userOrder.recipientDetails;
     recipientDetails[name] = value;
-    this.setState({
+    setState({
       recipientDetails,
     });
   };
   //---------------------------------------------------------
 
-  handleChangeHeadquarters = (e) => {
+  const handleChangeHeadquarters = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.headquarters = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  handleSelectSenderDistrict = (e) => {
+  const handleSelectSenderDistrict = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.senderDetails.district = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  handleSelectRecipientDistrict = (e) => {
+  const handleSelectRecipientDistrict = (e) => {
     const value = e.target.value;
-    let userOrder = this.state.userOrder;
+    let userOrder = state.userOrder;
     userOrder.recipientDetails.district = value;
-    this.setState({
+    setState({
       userOrder,
     });
   };
 
-  fetchHeadquarters = () => {
-    ModulAPI.get(this.props.accessToken, "headquarters", "get")
+  const fetchHeadquarters = () => {
+    ModulAPI.get(props.accessToken, "headquarters", "get")
       .then((allHeadquarters) => {
-        this.setState({
+        setState({
           allHeadquarters: allHeadquarters,
         });
       })
       .catch((error) => console.log(error));
   };
 
-  fetchDistricts = () => {
-    ModulAPI.get(this.props.accessToken, "district", "get")
+  const fetchDistricts = () => {
+    ModulAPI.get(props.accessToken, "district", "get")
       .then((allDistrict) => {
-        this.setState({
+        setState({
           allDistrict: allDistrict,
         });
       })
       .catch((error) => console.log(error));
   };
 
-  componentDidMount() {
-    this.fetchHeadquarters();
-    this.fetchDistricts();
-  }
+  useEffect(() => {
+    fetchHeadquarters();
+    fetchDistricts();
+  }, []);
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let json = JSON.stringify(this.state.userOrder);
-    ModulAPI.post(this.props.accessToken, "user-order/new", "post", json)
+    let json = JSON.stringify(state.userOrder);
+    ModulAPI.post(props.accessToken, "user-order/new", "post", json)
       .then((userOrder) => {
-        this.props.history.push({
+        props.history.push({
           pathname: "/user-order",
           state: { userOrderId: userOrder.id },
           active: true,
@@ -167,55 +131,23 @@ class UserOrderNew extends Component {
       .catch((error) => console.log(error));
   };
 
-  // render() {
-  //   return (
-  // problem z handleSubmit
-  //     <UserOrderNewForm
-  //       handleSubmit={this.handleSubmit}
-  //       handleChangeBase={this.handleChangeBase}
-  //       handleChangeHeadquarters={this.handleChangeHeadquarters}
-  //       allDistrict={this.state.allDistrict}
-  //       handleChangePackage={this.handleChangePackage}
-  //       changeArrow={this.state.changeArrow}
-  //       handleSwitchArrow={this.handleSwitchArrow}
-  //       hrLine={this.state.hrLine}
-  //       allHeadquarters={this.state.allHeadquarters}
-  //       handleChangeSenderDetails={this.handleChangeSenderDetails}
-  //       handleSelectSenderDistrict={this.handleSelectSenderDistrict}
-  //       handleChangeRecipientDetails={this.handleChangeRecipientDetails}
-  //     />
-  //   );
-  // }
-
-  render() {
-    return (
-      // <>
-      //   <h1
-      //     className="m-3 display-4 d-flex justify-content-center"
-      //     style={{ fontSize: "40px", paddingTop: "100px" }}
-      //   >
-      //     Create user order
-      //   </h1>
-      //   <form onSubmit={this.handleSubmit}>
-      <UserOrderNewForm
-        handleSubmit={this.handleSubmit}
-        handleChangeBase={this.handleChangeBase}
-        handleChangeHeadquarters={this.handleChangeHeadquarters}
-        allHeadquarters={this.state.allHeadquarters}
-        handleChangePackage={this.handleChangePackage}
-        hrLine={this.state.hrLine}
-        handleSwitchArrow={this.handleSwitchArrow}
-        changeArrow={this.state.changeArrow}
-        handleChangeSenderDetails={this.handleChangeSenderDetails}
-        handleSelectSenderDistrict={this.handleSelectSenderDistrict}
-        handleChangeRecipientDetails={this.handleChangeRecipientDetails}
-        allDistrict={this.state.allDistrict}
-        handleSelectRecipientDistrict={this.handleSelectRecipientDistrict}
-      />
-      //   </form>
-      // </>
-    );
-  }
+  return (
+    <UserOrderNewForm
+      handleSubmit={handleSubmit}
+      handleChangeBase={handleChangeBase}
+      handleChangeHeadquarters={handleChangeHeadquarters}
+      allHeadquarters={state.allHeadquarters}
+      handleChangePackage={handleChangePackage}
+      hrLine={state.hrLine}
+      handleSwitchArrow={handleSwitchArrow}
+      changeArrow={state.changeArrow}
+      handleChangeSenderDetails={handleChangeSenderDetails}
+      handleSelectSenderDistrict={handleSelectSenderDistrict}
+      handleChangeRecipientDetails={handleChangeRecipientDetails}
+      allDistrict={state.allDistrict}
+      handleSelectRecipientDistrict={handleSelectRecipientDistrict}
+    />
+  );
 }
 
 export default UserOrderNew;

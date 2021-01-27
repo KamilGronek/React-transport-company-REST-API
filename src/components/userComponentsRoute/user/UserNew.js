@@ -1,90 +1,74 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+import React, { useReducer } from "react";
 // import { Redirect } from "react-router-dom";
 import ModulAPI from "../../../api/ModulAPI";
 import UserNewForm from "./UserNewForm";
 // import { NavLink } from "react-router-dom";
+import { initialUserState } from "../../../../src/InitialState";
 
-class UserNew extends Component {
-  constructor(props) {
-    super(props);
+const stateReducer = (prevState, stateChanges) => {
+  return {
+    ...prevState,
+    ...stateChanges,
+  };
+};
 
-    this.state = {
-      user: {
-        name: "",
-        surname: "",
-        confirmPassword: {
-          first: "",
-          second: "",
-        },
-        phoneNumber: "",
-        email: "",
-      },
-      error: {
-        confirmPasswordFirst: [],
-        email: [],
-      },
-      // active: this.props.location.active,
-    };
-  }
+function UserNew(props) {
+  const [state, setState] = useReducer(stateReducer, initialUserState);
 
-  handleChangeBase = (e) => {
-    console.log(this.state);
+  const handleChangeBase = (e) => {
+    // console.log(state);
     const value = e.target.value;
     const name = e.target.name;
-    let user = this.state.user;
+    let user = state.user;
     user[name] = value;
-    this.setState({
+    setState({
       user,
     });
-    console.log(this.state);
+    // console.log(this.state);
   };
 
-  handleChangeConfirmPassword = (e) => {
+  const handleChangeConfirmPassword = (e) => {
     const value = e.target.value;
-    let user = this.state.user;
+    let user = state.user;
     user.confirmPassword.first = value;
-    this.setState({
+    setState({
       user,
     });
   };
 
-  handleChangeConfirmPassword2 = (e) => {
+  const handleChangeConfirmPassword2 = (e) => {
     const value = e.target.value;
-    let user = this.state.user;
+    let user = state.user;
     user.confirmPassword.second = value;
-    this.setState({
+    setState({
       user,
     });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let json = JSON.stringify(this.state.user);
-    ModulAPI.post(this.props.accessToken, "user/new", "post", json)
+    let json = JSON.stringify(state.user);
+    ModulAPI.post(props.accessToken, "user/new", "post", json)
       .then((user) => {
-        this.props.history.push({
+        props.history.push({
           pathname: "/user",
           state: { userId: user.id },
           active: true,
         });
       })
-      .then(this.status)
-      .then((res) => res.json())
-      .catch((error) => {
-        return Promise.resolve();
+      .catch((err) => {
+        if (err.text) {
+          err.text().then((err) => {
+            console.log(err);
+            handleErrorForm(err);
+          });
+        }
       });
   };
 
-  status = (res) => {
-    if (res.status === 400) {
-      console.log("400");
-      this.handleErrorForm(res);
-    }
-    return res;
-  };
-
-  handleErrorForm = (res) => {
-    let error = this.state.error;
+  const handleErrorForm = (res) => {
+    let error = state.error;
     if (
       res.form.children.confirmPassword.children.first.hasOwnProperty("errors")
     ) {
@@ -98,27 +82,23 @@ class UserNew extends Component {
     } else {
       error.email = [];
     }
-
-    this.setState({
+    setState({
       error,
     });
   };
-  render() {
-    return (
-      <UserNewForm
-        handleSubmit={this.handleSubmit}
-        handleChangeBase={this.handleChangeBase}
-        handleChangeConfirmPassword={this.handleChangeConfirmPassword}
-        confirmPasswordFirstLength={
-          this.state.error.confirmPasswordFirst.length
-        }
-        confirmPasswordFirst={this.state.error.confirmPasswordFirst[0]}
-        handleChangeConfirmPassword2={this.handleChangeConfirmPassword2}
-        errorLength={this.state.error.email.length}
-        errorEmail={this.state.error.email[0]}
-      />
-    );
-  }
+
+  return (
+    <UserNewForm
+      handleSubmit={handleSubmit}
+      handleChangeBase={handleChangeBase}
+      handleChangeConfirmPassword={handleChangeConfirmPassword}
+      confirmPasswordFirstLength={state.error.confirmPasswordFirst.length}
+      confirmPasswordFirst={state.error.confirmPasswordFirst[0]}
+      handleChangeConfirmPassword2={handleChangeConfirmPassword2}
+      errorLength={state.error.email.length}
+      errorEmail={state.error.email[0]}
+    />
+  );
 }
 
 export default UserNew;

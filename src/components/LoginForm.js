@@ -8,8 +8,6 @@ class LoginForm extends Component {
       email: "",
       password: "",
       accessToken: "",
-      url: "http://localhost:8000/oauth/v2/token",
-
       errors: {
         errorsEmail: false,
         errorsPassword: false,
@@ -42,7 +40,7 @@ class LoginForm extends Component {
       password: this.state.password,
       client_secret: "sdgggskokererg4232404gc4csdgfdsgf8s8ck5s",
     });
-    fetch(`${this.state.url}`, {
+    fetch("http://localhost:8000/oauth/v2/token", {
       method: "post",
       body: json,
       headers: new Headers({

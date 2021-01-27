@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
-import InputEditForm from "./fieldsFormComponent/InputEditForm";
 
 class UserOrderEditForm extends Component {
   render() {

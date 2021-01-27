@@ -19,15 +19,13 @@ const ModulAPI = {
     return fetch(
       `${BASE_URL}${endpoint}`,
       await makeRequest(method, accessToken, json)
-    )
-      .then((response) => {
-        if (response.status !== 201) {
-          throw new Error("Something went wrong...");
-        } else {
-          return response.json();
-        }
-      })
-      .catch((error) => console.log(error));
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else if (response.status === 400) {
+        return Promise.reject(response.json());
+      }
+    });
   },
 
   delete: async function (

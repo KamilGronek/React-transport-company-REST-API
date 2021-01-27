@@ -1,38 +1,21 @@
-import React, { Component } from "react";
+import React, { useEffect, useReducer } from "react";
 import ModulAPI from "../../../api/ModulAPI";
 import UserEditForm from "./UserEditForm";
+import { initialUserState } from "../../../../src/InitialState";
+const stateReducer = (prevState, stateChanges) => {
+  return {
+    ...prevState,
+    ...stateChanges,
+  };
+};
 
-class UserEdit extends Component {
-  constructor(props) {
-    super(props);
+function UserEdit(props) {
+  const [state, setState] = useReducer(stateReducer, initialUserState);
 
-    this.state = {
-      user: {
-        name: "",
-        surname: "",
-        confirmPassword: {
-          first: "",
-          second: "",
-        },
-        phoneNumber: "",
-        email: "",
-      },
-      error: {
-        confirmPasswordFirst: [],
-        email: [],
-      },
-    };
-  }
-
-  componentDidMount() {
-    ModulAPI.getId(
-      this.props.accessToken,
-      "user",
-      "get",
-      this.props.location.id
-    )
+  useEffect(() => {
+    ModulAPI.getId(props.accessToken, "user", "get", props.location.id)
       .then((res) => {
-        this.setState({
+        setState({
           user: {
             name: res.name,
             surname: res.surname,
@@ -46,59 +29,59 @@ class UserEdit extends Component {
         });
       })
       .catch((error) => console.log(error));
-  }
+  }, []);
 
-  handleChangeBase = (e) => {
+  const handleChangeBase = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    let user = this.state.user;
+    let user = state.user;
     user[name] = value;
-    this.setState({
+    setState({
       // [name]: value,
       user,
     });
   };
 
-  handleChangeConfirmPassword = (e) => {
+  const handleChangeConfirmPassword = (e) => {
     const value = e.target.value;
-    let user = this.state.user;
+    let user = state.user;
     user.confirmPassword.first = value;
-    this.setState({
+    setState({
       user,
     });
   };
 
-  handleChangeConfirmPassword2 = (e) => {
+  const handleChangeConfirmPassword2 = (e) => {
     const value = e.target.value;
-    let user = this.state.user;
+    let user = state.user;
     user.confirmPassword.second = value;
-    this.setState({
+    setState({
       user,
     });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let json = JSON.stringify(this.state.user);
+    let json = JSON.stringify(state.user);
     ModulAPI.put(
-      this.props.accessToken,
+      props.accessToken,
       "user",
       "put",
-      this.props.location.id,
+      props.location.id,
       json,
       "/edit"
     ).then((response) => {
-      this.props.history.push({
+      props.history.push({
         pathname: "/user",
-        state: { userEdit: this.props.location.id },
+        state: { userEdit: props.location.id },
         activeEdit: true,
       });
       return response;
     });
   };
 
-  handleErrorForm = (res) => {
-    let error = this.state.error;
+  const handleErrorForm = (res) => {
+    let error = state.error;
     console.log(res.form.children.confirmPassword.children.first);
     if (
       res.form.children.confirmPassword.children.first.hasOwnProperty("errors")
@@ -114,32 +97,30 @@ class UserEdit extends Component {
       error.email = [];
     }
 
-    this.setState({
+    setState({
       error,
     });
   };
 
-  render() {
-    console.log(this.state.error.email);
-    return (
-      <UserEditForm
-        {...this.props}
-        accessToken={this.props.accessToken}
-        handleSubmit={this.handleSubmit}
-        handleChangeBase={this.handleChangeBase}
-        handleChangeConfirmPassword={this.handleChangeConfirmPassword}
-        handleChangeConfirmPassword2={this.handleChangeConfirmPassword2}
-        name={this.state.user.name}
-        surname={this.state.user.surname}
-        confirmPassword={this.state.user.confirmPassword.first}
-        confirmPassword2={this.state.user.confirmPassword.second}
-        phoneNumber={this.state.user.phoneNumber}
-        email={this.state.user.email}
-        id={this.props.location.id}
-        error={this.state.error}
-      />
-    );
-  }
+  console.log(state.error.email);
+  return (
+    <UserEditForm
+      {...props}
+      accessToken={props.accessToken}
+      handleSubmit={handleSubmit}
+      handleChangeBase={handleChangeBase}
+      handleChangeConfirmPassword={handleChangeConfirmPassword}
+      handleChangeConfirmPassword2={handleChangeConfirmPassword2}
+      name={state.user.name}
+      surname={state.user.surname}
+      confirmPassword={state.user.confirmPassword.first}
+      confirmPassword2={state.user.confirmPassword.second}
+      phoneNumber={state.user.phoneNumber}
+      email={state.user.email}
+      id={props.location.id}
+      error={state.error}
+    />
+  );
 }
 
 export default UserEdit;
